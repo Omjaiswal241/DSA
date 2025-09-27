@@ -3,7 +3,7 @@ class Solution {
         long sum=0;
         int l=0,r,maxfreq=0;
         Arrays.sort(nums);
-        long n=nums.length;
+        int n=nums.length;
         for(r=0;r<n;r++)
         {
             sum+=nums[r];
