@@ -1,10 +1,10 @@
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
-       List<List<Integer>> li=new ArrayList<List<Integer>>();
-       getperm(nums,0,li);
-       return li; 
+        List<List<Integer>> li=new ArrayList<List<Integer>>();
+        getperm(nums,0,li);
+        return li;
     }
-    void getperm(int[] nums,int idx,List<List<Integer>> li)
+    public static void getperm(int []nums,int idx,List<List<Integer>> li)
     {
         if(idx==nums.length)
         {
@@ -14,7 +14,6 @@ class Solution {
                 temp.add(i);
             }
             li.add(temp);
-            return;
         }
         for(int i=idx;i<nums.length;i++)
         {
@@ -23,10 +22,10 @@ class Solution {
             swap(nums,i,idx);
         }
     }
-    void swap(int []nums,int a,int b)
+    public static void swap(int ar[],int i,int j)
     {
-        int temp=nums[a];
-        nums[a]=nums[b];
-        nums[b]=temp;
+        int temp=ar[i];
+        ar[i]=ar[j];
+        ar[j]=temp;
     }
 }
