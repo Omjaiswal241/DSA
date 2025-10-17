@@ -5,11 +5,8 @@ class Solution {
         while(low<=high)
         {
             int mid=low+(high-low)/2;
-            if(total(piles,mid)==h)
-            {
-                high=mid-1;
-            }
-            else if(total(piles,mid)<h)
+            int time=total(piles,mid);
+            if(time<=h)
             {
                 high=mid-1;
             }
