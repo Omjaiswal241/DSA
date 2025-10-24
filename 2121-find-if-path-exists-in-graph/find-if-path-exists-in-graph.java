@@ -3,7 +3,7 @@ class Solution {
         List<List<Integer>> graph=new ArrayList<>();
         for(int i=0;i<n;i++)
         {
-            graph.add(new ArrayList<Integer>());
+            graph.add(new ArrayList<>());
         }
         for(int[] edge:edges)
         {
@@ -12,18 +12,18 @@ class Solution {
         }
         return haspath(new boolean[n],graph,source,destination);
     }
-    public static boolean haspath(boolean visited[],List<List<Integer>> graph,int src,int dest)
+    public static boolean haspath(boolean [] visited,List<List<Integer>> graph,int src,int dest)
     {
         if(src==dest)
         {
             return true;
         }
         visited[src]=true;
-        for(int neighbour:graph.get(src))
+        for(int nbr:graph.get(src))
         {
-            if(visited[neighbour]==false)
+            if(visited[nbr]==false)
             {
-                boolean res=haspath(visited,graph,neighbour,dest);
+                boolean res=haspath(visited,graph,nbr,dest);
                 if(res)
                 {
                     return true;
