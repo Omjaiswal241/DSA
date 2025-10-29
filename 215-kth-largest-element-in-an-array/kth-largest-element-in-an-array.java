@@ -1,7 +1,6 @@
 class Solution {
     public int findKthLargest(int[] nums, int k) {
         PriorityQueue<Integer> qu=new PriorityQueue<>();
-        int ans=Integer.MIN_VALUE;
         int i=0;
         while(i<nums.length)
         {
