@@ -1,35 +1,18 @@
 class Solution {
     public int jump(int[] nums) {
-        return jumpT(nums);
-    }
-    public static int jumpT(int []nums)
-    {
         int n=nums.length;
-        int dp[]=new int[n];
-        Arrays.fill(dp,Integer.MAX_VALUE);
-        for(int i=n-1;i>=0;i--)
+        int l=0,r=0,jump=0;
+        while(r<n-1)
         {
-            if(i==n-1)
+            int farthest=0;
+            for(int i=l;i<=r;i++)
             {
-                dp[i]=0;
+                farthest=Math.max((nums[i]+i),farthest);
             }
-            else
-            {
-                int idx=nums[i];
-                while(idx>0)
-                {
-                    if(idx+i<n)
-                    {
-                        dp[i]=Math.min(dp[idx+i],dp[i]);
-                    }
-                        idx--;
-                        if(idx==0 && dp[i]!=Integer.MAX_VALUE)
-                        {
-                            dp[i]++;
-                        }
-                    }
-                }
-            }
-            return dp[0];
+            l=r+1;
+            r=farthest;
+            jump++;
         }
+        return jump;
     }
+}
