@@ -1,13 +1,14 @@
 class Solution {
     public int maxFrequency(int[] nums, int k) {
-        long sum=0;
-        int l=0,r,maxfreq=0;
         Arrays.sort(nums);
+        int l=0;
+        int maxfreq=Integer.MIN_VALUE;
         int n=nums.length;
-        for(r=0;r<n;r++)
+        long sum=0;
+        for(int r=0;r<n;r++)
         {
             sum+=nums[r];
-            while(l<r && (long)nums[r]*(r-l+1)>sum+k)
+            while(l<r && (sum+k)<((long)nums[r]*(r-l+1)))
             {
                 sum-=nums[l];
                 l++;
