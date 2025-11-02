@@ -1,11 +1,19 @@
 class Solution {
     public long maxProduct(int[] nums) {
-    long a = 0, b = 0;
-    for (int x : nums) {
-        long ax = Math.abs(x);
-        if (ax >= a) { b = a; a = ax; }
-        else if (ax > b) { b = ax; }
-    }
-    return 100000L * a * b; 
+        long a=0,b=0;
+        for(int i:nums)
+        {
+            int val=Math.abs(i);
+            if(val>a)
+            {
+                b=a;
+                a=val;
+            }
+            else if(val>b)
+            {
+                b=val;
+            }
+        }
+        return 100000L*a*b;
     }
 }
