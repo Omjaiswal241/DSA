@@ -2,13 +2,11 @@ class Solution {
     public int lengthOfLIS(int[] nums) {
         ArrayList<Integer> li=new ArrayList<>();
         li.add(nums[0]);
-        int len=1;
         for(int i=1;i<nums.length;i++)
         {
             if(nums[i]>li.get(li.size()-1))
             {
                 li.add(nums[i]);
-                len++;
             }
             else
             {
@@ -16,7 +14,7 @@ class Solution {
                 li.set(idx,nums[i]);
             }
         }
-        return len;
+        return li.size();
     }
     public static int lowerbound(ArrayList<Integer> li,int num)
     {
