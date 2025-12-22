@@ -19,9 +19,9 @@ class Solution {
         {
             return true;
         }
-        return helper(root.left,root.right);
+        return check(root.left,root.right);
     }
-    public static boolean helper(TreeNode root1,TreeNode root2)
+    boolean check(TreeNode root1,TreeNode root2)
     {
         if(root1==null && root2==null)
         {
@@ -31,6 +31,6 @@ class Solution {
         {
             return false;
         }
-        return (root1.val==root2.val) && helper(root1.left,root2.right) && helper(root1.right,root2.left);
+        return root1.val==root2.val && check(root1.left,root2.right) && check(root1.right,root2.left);
     }
 }
