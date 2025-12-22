@@ -14,42 +14,22 @@
  * }
  */
 class Solution {
-    class NodePair
-    {
-        TreeNode node;
-        int level;
-        NodePair(TreeNode node,int level)
-        {
-            this.node=node;
-            this.level=level;
-        }
-    }
     public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> li=new ArrayList<>();
+        List<Integer> res=new ArrayList<>();
+        solve(root,0,res);
+        return res;
+    }
+    void solve(TreeNode root,int currlvl,List<Integer> res)
+    {
         if(root==null)
         {
-            return li;
+            return;
         }
-        TreeMap<Integer,Integer> tm=new TreeMap<>();
-        Queue<NodePair> qu=new ArrayDeque<>();
-        qu.add(new NodePair(root,0));
-        while(qu.size()!=0)
+        if(currlvl==res.size())
         {
-            NodePair front=qu.remove();
-            tm.putIfAbsent(front.level,front.node.val);
-            if(front.node.right!=null)
-            {
-                qu.add(new NodePair(front.node.right,front.level+1));
-            }
-            if(front.node.left!=null)
-            {
-                qu.add(new NodePair(front.node.left,front.level+1));
-            }
+            res.add(root.val);
         }
-        for(int val:tm.values())
-        {
-            li.add(val);
-        }
-        return li;
+        solve(root.right,currlvl+1,res);
+        solve(root.left,currlvl+1,res);
     }
 }
