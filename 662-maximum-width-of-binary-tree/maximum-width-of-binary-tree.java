@@ -14,7 +14,7 @@
  * }
  */
 class Solution {
-    static class Pair
+    class Pair
     {
         TreeNode node;
         int idx;
@@ -29,36 +29,30 @@ class Solution {
         {
             return 0;
         }
-        Queue<Pair> qu=new LinkedList<>();
+        Queue<Pair> qu=new ArrayDeque<>();
+        int maxwidth=Integer.MIN_VALUE;
         qu.add(new Pair(root,0));
-        int maxwidth=0;
-        while(qu.size()>0)
+        while(qu.size()!=0)
         {
-            int minidx=qu.peek().idx;
-            long size=qu.size();
-            long first=0,last=0;
+            int size=qu.size();
+            int low=0,high=0;
+            int mmin=qu.peek().idx;
             for(int i=0;i<size;i++)
             {
-                Pair curr=qu.poll();
-                curr.idx=curr.idx-minidx;
-                if(i==0)
+                int curridx=qu.peek().idx;
+                if(i==0) low=qu.peek().idx;
+                if(i==size-1) high=qu.peek().idx;
+                Pair front=qu.remove();
+                if(front.node.left!=null)
                 {
-                    first=curr.idx;
+                    qu.add(new Pair(front.node.left,2*(curridx-mmin)+1));
                 }
-                if(i==size-1)
+                if(front.node.right!=null)
                 {
-                    last=curr.idx;
-                }
-                if(curr.node.left!=null)
-                {
-                    qu.add(new Pair(curr.node.left,2*curr.idx+1));
-                }
-                if(curr.node.right!=null)
-                {
-                    qu.add(new Pair(curr.node.right,2*curr.idx+2));
+                    qu.add(new Pair(front.node.right,2*(curridx-mmin)+2));
                 }
             }
-            maxwidth=Math.max(maxwidth,(int)(last-first)+1);
+            maxwidth=Math.max(maxwidth,high-low+1);
         }
         return maxwidth;
     }
