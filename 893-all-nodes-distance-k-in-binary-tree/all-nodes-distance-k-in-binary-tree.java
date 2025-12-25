@@ -9,76 +9,80 @@
  */
 class Solution {
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
-        List<Integer> ans=new ArrayList<>();
-        List<TreeNode> li=nodetorootpath(root,target.val);
-        for(int i=0;i<li.size();i++)
+        List<Integer> li=new ArrayList<Integer>();
+        if(root==null)
         {
-            TreeNode curr=li.get(i);
-            if(i==0)
+            return li;
+        }
+        List<TreeNode> temp=nodetoroot(root,target.val);
+        for(int idx=0;idx<temp.size();idx++)
+        {
+            TreeNode curr=temp.get(idx);
+            if(idx==0)
             {
-                kleveldown(curr,k,ans);
+                kleveldown(curr,k,li);
             }
             else
             {
-            int dac=i;
-            int dreq=k-i;
-            if(dreq==0)
-            {
-                ans.add(curr.val);
-            }
-            else
-            {
-                TreeNode prev=li.get(i-1);
-                if(curr.left==prev)
+                int dac=idx;
+                int rdist=k-dac;
+                if(rdist==0)
                 {
-                    kleveldown(curr.right,dreq-1,ans);
+                    li.add(curr.val);
                 }
                 else
                 {
-                    kleveldown(curr.left,dreq-1,ans);
+                    TreeNode prev=temp.get(idx-1);
+                    if(curr.left==prev)
+                    {
+                        kleveldown(curr.right,rdist-1,li);
+                    }
+                    else
+                    {
+                        kleveldown(curr.left,rdist-1,li);
+                    }
                 }
             }
-            }
         }
-        return ans;
+        return li;
     }
-    public static void kleveldown(TreeNode node,int k,List<Integer> li)
+    public static void kleveldown(TreeNode root,int k,List<Integer> li)
     {
-        if(node==null)
+        if(root==null)
         {
             return;
         }
         if(k==0)
         {
-            li.add(node.val);
+            li.add(root.val);
             return;
         }
-        kleveldown(node.left,k-1,li);
-        kleveldown(node.right,k-1,li);
+        kleveldown(root.left,k-1,li);
+        kleveldown(root.right,k-1,li);
     }
-    public static List<TreeNode> nodetorootpath(TreeNode node,int val)
+    public static List<TreeNode> nodetoroot(TreeNode root,int target)
     {
-        if(node==null)
+        if(root==null)
         {
             return new ArrayList<>();
         }
-        if(node.val==val)
+        if(root.val==target)
         {
             List<TreeNode> base=new ArrayList<>();
-            base.add(node);
+            base.add(root);
             return base;
         }
-        List<TreeNode> lres=nodetorootpath(node.left,val);
-        if(lres.size()>0)
+        List<TreeNode> left=nodetoroot(root.left,target);
+        if(left.size()!=0)
         {
-            lres.add(node);
-            return lres;
+            left.add(root);
+            return left;
         }
-        List<TreeNode> rres=nodetorootpath(node.right,val);
-        if(rres.size()>0)
+        List<TreeNode> right=nodetoroot(root.right,target);
+        if(right.size()!=0)
         {
-            rres.add(node);
-            return rres;
+            right.add(root);
+            return right;
         }
         return new ArrayList<>();
     }
