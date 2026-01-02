@@ -15,48 +15,48 @@ public class Codec {
         {
             return "";
         }
-        StringBuilder res=new StringBuilder();
-        Queue<TreeNode> q=new LinkedList<>();
-        q.add(root);
-        while(q.size()>0)
+        StringBuilder sb=new StringBuilder();
+        Queue<TreeNode> qu=new LinkedList<>();
+        qu.add(root);
+        while(qu.size()>0)
         {
-            TreeNode node=q.remove();
-            if(node==null)
+            TreeNode front=qu.remove();
+            if(front==null)
             {
-                res.append("n ");
+                sb.append("n ");
                 continue;
             }
-            res.append(node.val+" ");
-            q.add(node.left);
-            q.add(node.right);
+            sb.append(front.val+" ");
+            qu.add(front.left);
+            qu.add(front.right);
         }
-        return res.toString();
+        return sb.toString();
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        if(data=="")
+        if(data.equals(""))
         {
             return null;
         }
-        String values[]=data.split(" ");
-        Queue<TreeNode> q=new LinkedList<>();
+        String[] values=data.split(" ");
         TreeNode root=new TreeNode(Integer.parseInt(values[0]));
-        q.add(root);
+        Queue<TreeNode> qu=new ArrayDeque<>();
+        qu.add(root);
         for(int i=1;i<values.length;i++)
         {
-            TreeNode parent=q.remove();
+            TreeNode parent=qu.remove();
             if(!values[i].equals("n"))
             {
                 TreeNode left=new TreeNode(Integer.parseInt(values[i]));
                 parent.left=left;
-                q.add(left);
+                qu.add(left);
             }
             if(!values[++i].equals("n"))
             {
                 TreeNode right=new TreeNode(Integer.parseInt(values[i]));
                 parent.right=right;
-                q.add(right);
+                qu.add(right);
             }
         }
         return root;
