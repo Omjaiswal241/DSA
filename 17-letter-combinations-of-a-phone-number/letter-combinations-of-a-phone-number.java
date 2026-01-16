@@ -1,28 +1,33 @@
 class Solution {
-    static String keypad[]={"","@","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
-    public List<String> letterCombinations(String digits) 
-    {
+    String keypad[]={"#","@","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    public List<String> letterCombinations(String digits) {
         if(digits.length()==0)
         {
-            List<String> res=new ArrayList<>();
-            return res;
+            return new ArrayList<>();
         }
-        List<String> ans=new ArrayList<>();
-        char x=digits.charAt(0);
-        String roq=digits.substring(1);
-        List<String> key=letterCombinations(roq);
-        if(key.size()==0)
+        return helper(digits,0,digits.length());
+    }
+    public List<String> helper(String s,int idx,int d)
+    {
+        if(idx==d)
         {
-            key.add("");
+            List li=new ArrayList<>();
+            li.add("");
+            return li;
         }
-        String f=keypad[Character.getNumericValue(x)];
-        for(int i=0;i<f.length();i++)
+        char x=s.charAt(0);
+        String roq=s.substring(1);
+        List<String> ans=helper(roq,idx+1,d);
+        List<String> res=new ArrayList<>();
+        String str=keypad[Integer.parseInt(x+"")];
+        for(int i=0;i<str.length();i++)
         {
-            for(int j=0;j<key.size();j++)
+            char f=str.charAt(i);
+            for(int j=0;j<ans.size();j++)
             {
-                ans.add(f.charAt(i)+key.get(j));
+                res.add(f+ans.get(j));
             }
         }
-        return ans;
+        return new ArrayList<>(res);
     }
 }
