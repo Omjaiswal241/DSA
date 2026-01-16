@@ -1,51 +1,62 @@
 class Solution {
     public void solveSudoku(char[][] board) {
-        solve(board,0,0);
+        safestate(board,0,0);
     }
-    public static boolean solve(char[][] board,int row,int col)
+    public boolean safestate(char [][]board,int row,int col)
     {
-        for(int r=0;r<board.length;r++)
+        if(row==9)
         {
-            for(int c=0;c<board[0].length;c++)
+            return true;
+        }
+        int nrow=row;
+        int ncol=col+1;
+        if(ncol==9)
+        {
+            nrow=row+1;
+            ncol=0;
+        }
+        if(board[row][col]!='.')
+        {
+            return safestate(board,nrow,ncol);
+        }
+        for(char i='1';i<='9';i++)
+        {
+            if(issafe(board,row,col,i))
             {
-                if(board[r][c]=='.')
+                board[row][col]=i;
+                boolean res=safestate(board,nrow,ncol);
+                if(res)
                 {
-                for(char i='1';i<='9';i++)
-                {
-                    if(issafe(board,r,c,i))
-                    {
-                        board[r][c]=i;
-                        if(solve(board,r,c)==true)
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            board[r][c]='.';
-                        }
-                    }
+                    return true;
                 }
-                return false;
-                }
+                board[row][col]='.';
             }
         }
-        return true;
+        return false;
     }
-    public static boolean issafe(char [][]board,int row,int col,char c)
+    public boolean issafe(char [][]board,int row,int col,char d)
     {
         for(int i=0;i<9;i++)
         {
-            if(board[i][col]==c)
+            if(board[i][col]==d)
             {
                 return false;
             }
-            if(board[row][i]==c)
+            if(board[row][i]==d)
             {
                 return false;
             }
-            if(board[3*(row/3)+i/3][3*(col/3)+i%3]==c)
+        }
+        int src=3*(row/3);
+        int scl=3*(col/3);
+        for(int i=0;i<3;i++)
+        {
+            for(int j=0;j<3;j++)
             {
-                return false;
+                if(board[src+i][scl+j]==d)
+                {
+                    return false;
+                }
             }
         }
         return true;
