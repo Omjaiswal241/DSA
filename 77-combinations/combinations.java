@@ -1,29 +1,29 @@
 class Solution {
+    List<List<Integer>> res=new ArrayList<>();
     public List<List<Integer>> combine(int n, int k) {
-        List<List<Integer>> li=new ArrayList<List<Integer>>();
-        helper(new int[n],1,k,-1,li);
-        return li;
+        helper(new int[n],0,k,-1);
+        return res;
     }
-    public static void helper(int ar[],int ci,int ti,int lb,List<List<Integer>> li)
+    public void helper(int box[],int ci,int ti,int lb)
     {
-        if(ci>ti)
+        if(ci==ti)
         {
-            List<Integer> temp=new ArrayList<>();
-            for(int i=0;i<ar.length;i++)
+            List<Integer> li=new ArrayList<>();
+            for(int i:box)
             {
-                if(ar[i]!=0)
+                if(i!=0)
                 {
-                    temp.add(i+1);
+                    li.add(i);
                 }
             }
-            li.add(temp);
+            res.add(li);
             return;
         }
-        for(int i=lb+1;i<ar.length;i++)
+        for(int i=lb+1;i<box.length;i++)
         {
-            ar[i]=1;
-            helper(ar,ci+1,ti,i,li);
-            ar[i]=0;
+            box[i]=i+1;
+            helper(box,ci+1,ti,i);
+            box[i]=0;
         }
     }
 }
