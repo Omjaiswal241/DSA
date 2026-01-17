@@ -1,25 +1,24 @@
 class Solution {
+    List<Integer> res=new ArrayList<>();
     public List<Integer> lexicalOrder(int n) {
-      List<Integer> li=new ArrayList<Integer>();
-      for(int i=1;i<=9;i++)
-      {
-        solve(i,n,li);
-      }  
-      return li;
-    }
-    public static void solve(int num,int n,List<Integer> li)
-    {
-        if(num>n)
+        for(int i=1;i<=9;i++)
         {
-            return;
-        }
-        li.add(num);
-        for(int digit=0;digit<=9;digit++)
-        {
-            int newnum=num*10+digit;
-            if(newnum<=n)
+            if(i<=n)
             {
-                solve(newnum,n,li);
+            helper(n,i);
+            }
+        }
+        return res;
+    }
+    public void helper(int n,int i)
+    {
+        res.add(i);
+        for(int j=0;j<=9;j++)
+        {
+            int f=i*10+j;
+            if(f<=n)
+            {
+                helper(n,f);
             }
         }
     }
