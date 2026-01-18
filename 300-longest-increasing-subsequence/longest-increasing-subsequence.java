@@ -1,37 +1,28 @@
 class Solution {
     public int lengthOfLIS(int[] nums) {
-        ArrayList<Integer> li=new ArrayList<>();
-        li.add(nums[0]);
-        for(int i=1;i<nums.length;i++)
+        int n=nums.length;
+        int dp[][]=new int[n][n];
+        for(int i[]:dp)
         {
-            if(nums[i]>li.get(li.size()-1))
-            {
-                li.add(nums[i]);
-            }
-            else
-            {
-                int idx=lowerbound(li,nums[i]);
-                li.set(idx,nums[i]);
-            }
+            Arrays.fill(i,-1);
         }
-        return li.size();
+        return helper(nums,0,-1,dp);
     }
-    public static int lowerbound(ArrayList<Integer> li,int num)
+    public int helper(int nums[],int idx,int prev_idx,int [][]dp)
     {
-        int low=0;
-        int high=li.size()-1;
-        while(low<=high)
+        if(idx==nums.length)
         {
-            int mid=low+(high-low)/2;
-            if(li.get(mid)<num)
-            {
-                low=mid+1;
-            }
-            else
-            {
-                high=mid-1;
-            }
+            return 0;
         }
-        return low;
+        if(dp[idx][prev_idx+1]!=-1)
+        {
+            return dp[idx][prev_idx+1];
+        }
+        int len=helper(nums,idx+1,prev_idx,dp);
+        if(prev_idx==-1 || nums[idx]>nums[prev_idx])
+        {
+            len=Math.max(len,1+helper(nums,idx+1,idx,dp));
+        }
+        return dp[idx][prev_idx+1]=len;
     }
 }
