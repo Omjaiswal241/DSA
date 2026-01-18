@@ -9,7 +9,7 @@ class Solution {
         }
         li.add(n);
         int m=li.size();
-        int dp[][]=new int[m+1][m+1];
+        int dp[][]=new int[m][m];
         for(int i[]:dp)
         {
             Arrays.fill(i,-1);
