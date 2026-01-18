@@ -1,11 +1,6 @@
 class Solution {
     public int minCost(int n, int[] cuts) {
         Arrays.sort(cuts);
-        int dp[][]=new int[cuts.length+2][cuts.length+2];
-        for(int i[]:dp)
-        {
-            Arrays.fill(i,-1);
-        }
         ArrayList<Integer> li=new ArrayList<>();
         li.add(0);
         for(int i=0;i<cuts.length;i++)
@@ -13,11 +8,17 @@ class Solution {
             li.add(cuts[i]);
         }
         li.add(n);
-        return helper(li,0,li.size()-1,dp);
+        int m=li.size();
+        int dp[][]=new int[m+1][m+1];
+        for(int i[]:dp)
+        {
+            Arrays.fill(i,-1);
+        }
+        return helper(li,dp,0,li.size()-1);
     }
-    public static int helper(ArrayList<Integer> li,int l,int h,int dp[][])
+    public int helper(ArrayList<Integer> li,int dp[][],int l,int h)
     {
-        if(h-l==1)
+        if(h-l<=1)
         {
             return 0;
         }
@@ -25,12 +26,13 @@ class Solution {
         {
             return dp[l][h];
         }
-        int minsteps=Integer.MAX_VALUE;
-        for(int i=l+1;i<=h-1;i++)
+        int cost=Integer.MAX_VALUE;
+        for(int i=l+1;i<h;i++)
         {
-            int steps=(li.get(h)-li.get(l))+helper(li,l,i,dp)+helper(li,i,h,dp);
-            minsteps=Math.min(steps,minsteps);
+            int x=li.get(i);
+            int curr=(li.get(h)-li.get(l))+helper(li,dp,l,i)+helper(li,dp,i,h);
+            cost=Math.min(cost,curr);
         }
-        return dp[l][h]=minsteps;
+        return dp[l][h]=cost;
     }
 }
