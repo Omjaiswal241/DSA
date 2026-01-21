@@ -29,31 +29,36 @@ class Solution {
         {
             return 0;
         }
-        Queue<Pair> qu=new ArrayDeque<>();
-        int maxwidth=Integer.MIN_VALUE;
-        qu.add(new Pair(root,0));
-        while(qu.size()!=0)
+       Queue<Pair> qu=new ArrayDeque<>();
+       qu.add(new Pair(root,0));
+       int mmin=Integer.MIN_VALUE;
+       while(qu.size()!=0)
+       {
+        int size=qu.size();
+        int low=0,high=0;
+        for(int i=0;i<size;i++)
         {
-            int size=qu.size();
-            int low=0,high=0;
-            int mmin=qu.peek().idx;
-            for(int i=0;i<size;i++)
+            int curridx=qu.peek().idx;
+            if(i==0)
             {
-                int curridx=qu.peek().idx;
-                if(i==0) low=qu.peek().idx;
-                if(i==size-1) high=qu.peek().idx;
-                Pair front=qu.remove();
-                if(front.node.left!=null)
-                {
-                    qu.add(new Pair(front.node.left,2*(curridx-mmin)+1));
-                }
-                if(front.node.right!=null)
-                {
-                    qu.add(new Pair(front.node.right,2*(curridx-mmin)+2));
-                }
+                low=curridx;
             }
-            maxwidth=Math.max(maxwidth,high-low+1);
+            if(i==size-1)
+            {
+                high=curridx;
+            }
+            Pair curr=qu.remove();
+            if(curr.node.left!=null)
+            {
+                qu.add(new Pair(curr.node.left,2*(curridx-low)+1));
+            }
+            if(curr.node.right!=null)
+            {
+                qu.add(new Pair(curr.node.right,2*(curridx-low)+2));
+            }
         }
-        return maxwidth;
+        mmin=Math.max(mmin,(high-low)+1);
+       } 
+       return mmin;
     }
 }
