@@ -9,7 +9,7 @@ class Solution {
         }
         return helper(word1,n-1,word2,m-1,dp);
     }
-    public static int helper(String s1,int i,String s2,int j,int [][]dp)
+    public static int helper(String s,int i,String t,int j,int [][]dp)
     {
         if(i<0)
         {
@@ -23,10 +23,10 @@ class Solution {
         {
             return dp[i][j];
         }
-        if(s1.charAt(i)==s2.charAt(j))
+        if(s.charAt(i)==t.charAt(j))
         {
-            return dp[i][j]=helper(s1,i-1,s2,j-1,dp); //skip
+            return dp[i][j]=helper(s,i-1,t,j-1,dp);
         }
-        return dp[i][j]=1+Math.min((helper(s1,i-1,s2,j-1,dp)),Math.min((helper(s1,i,s2,j-1,dp)),(helper(s1,i-1,s2,j,dp))));  //replace,insert,delete
+        return dp[i][j]=Math.min(Math.min(1+helper(s,i-1,t,j-1,dp),1+helper(s,i-1,t,j,dp)),(1+helper(s,i,t,j-1,dp)));
     }
 }
