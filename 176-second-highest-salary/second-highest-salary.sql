@@ -1,7 +1,7 @@
-Select (
-    Select DISTINCT salary
-    From Employee
-    Order By salary desc
-    Limit 1 OFFSET 1
-) AS SecondHighestSalary
-
+# Write your MySQL query statement below
+select 
+(
+    select Distinct salary from Employee
+    Order by salary desc
+    Limit 1 Offset 1
+) as SecondHighestSalary
