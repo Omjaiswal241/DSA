@@ -1,59 +1,59 @@
 class Solution {
     public void solveSudoku(char[][] board) {
-        safestate(board,0,0);
+        helper(board,0,0);
     }
-    public boolean safestate(char [][]board,int row,int col)
+    public boolean helper(char[][] board,int r,int c)
     {
-        if(row==9)
+        if(r==9)
         {
             return true;
         }
-        int nrow=row;
-        int ncol=col+1;
-        if(ncol==9)
+        int nr=r;
+        int nc=c+1;
+        if(nc==9)
         {
-            nrow=row+1;
-            ncol=0;
+            nr=r+1;
+            nc=0;
         }
-        if(board[row][col]!='.')
+        if(board[r][c]!='.')
         {
-            return safestate(board,nrow,ncol);
+            return helper(board,nr,nc);
         }
         for(char i='1';i<='9';i++)
         {
-            if(issafe(board,row,col,i))
+            if(issafe(board,r,c,i))
             {
-                board[row][col]=i;
-                boolean res=safestate(board,nrow,ncol);
+                board[r][c]=i;
+                boolean res=helper(board,nr,nc);
                 if(res)
                 {
                     return true;
                 }
-                board[row][col]='.';
+                board[r][c]='.';
             }
         }
         return false;
     }
-    public boolean issafe(char [][]board,int row,int col,char d)
+    public boolean issafe(char[][] board,int r,int c,char d)
     {
+        int srr=3*(r/3);
+        int src=3*(c/3);
         for(int i=0;i<9;i++)
         {
-            if(board[i][col]==d)
+            if(board[r][i]==d)
             {
                 return false;
             }
-            if(board[row][i]==d)
+            if(board[i][c]==d)
             {
                 return false;
             }
         }
-        int src=3*(row/3);
-        int scl=3*(col/3);
         for(int i=0;i<3;i++)
         {
             for(int j=0;j<3;j++)
             {
-                if(board[src+i][scl+j]==d)
+                if(board[srr+i][src+j]==d)
                 {
                     return false;
                 }
