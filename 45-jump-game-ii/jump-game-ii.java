@@ -1,18 +1,28 @@
 class Solution {
     public int jump(int[] nums) {
         int n=nums.length;
-        int l=0,r=0,jump=0;
-        while(r<n-1)
+        int dp[]=new int[n];
+        for(int i=n-2;i>=0;i--)
         {
-            int farthest=0;
-            for(int i=l;i<=r;i++)
+            int a=nums[i];
+            int jumps=Integer.MAX_VALUE;
+            while(a>0)
             {
-                farthest=Math.max((nums[i]+i),farthest);
+                if(i+a<n)
+                {
+                    jumps=Math.min(dp[i+a],jumps);
+                }
+                a--;
             }
-            l=r+1;
-            r=farthest;
-            jump++;
+            if(jumps!=Integer.MAX_VALUE)
+            {
+                dp[i]=jumps+1;
+            }
+            else
+            {
+                dp[i]=Integer.MAX_VALUE;
+            }
         }
-        return jump;
+        return dp[0];
     }
 }
