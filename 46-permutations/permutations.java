@@ -4,23 +4,23 @@ class Solution {
         helper(nums,0);
         return res;
     }
-    public void helper(int [] nums,int level)
+    public void helper(int []nums,int idx)
     {
-        if(level==nums.length)
+        if(idx==nums.length)
         {
-            List<Integer> temp=new ArrayList<>();
+            List<Integer> li=new ArrayList<>();
             for(int i:nums)
             {
-                temp.add(i);
+                li.add(i);
             }
-            res.add(temp);
+            res.add(li);
             return;
         }
-        for(int i=level;i<nums.length;i++)
+        for(int i=idx;i<nums.length;i++)
         {
-        swap(nums,i,level);
-        helper(nums,level+1);
-        swap(nums,i,level);
+            swap(nums,i,idx);
+            helper(nums,idx+1);
+            swap(nums,i,idx);
         }
     }
     public void swap(int nums[],int i,int j)
