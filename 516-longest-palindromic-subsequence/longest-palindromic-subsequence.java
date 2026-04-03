@@ -1,32 +1,37 @@
 class Solution {
     public int longestPalindromeSubseq(String s) {
-        String str="";
         int n=s.length();
-       for(int i=n-1;i>=0;i--)
-       {
-        str+=s.charAt(i);
-       } 
-       int dp[][]=new int[n+1][n+1];
-       for(int []i:dp)
-       {
-        Arrays.fill(i,-1);
-       }
-       return lcs(s,n-1,str,n-1,dp);
+        String t=reverse(s);
+        int dp[][]=new int[n][n];
+        for(int i[]:dp)
+        {
+            Arrays.fill(i,-1);
+        }
+        return helper(s,n-1,t,n-1,dp);
     }
-    public static int lcs(String s1,int n,String s2,int m,int dp[][])
+    public int helper(String str1,int idx1,String str2,int idx2,int dp[][])
     {
-        if(n<0 || m<0)
+        if(idx1<0 || idx2<0)
         {
             return 0;
         }
-        if(dp[n][m]!=-1)
+        if(dp[idx1][idx2]!=-1)
         {
-            return dp[n][m];
+            return dp[idx1][idx2];
         }
-        if(s1.charAt(n)==s2.charAt(m))
+        if(str1.charAt(idx1)==str2.charAt(idx2))
         {
-            return dp[n][m]=1+lcs(s1,n-1,s2,m-1,dp);
+            return dp[idx1][idx2]=1+helper(str1,idx1-1,str2,idx2-1,dp);
         }
-        return dp[n][m]=Math.max(lcs(s1,n-1,s2,m,dp),lcs(s1,n,s2,m-1,dp));
+        return dp[idx1][idx2]=Math.max(helper(str1,idx1-1,str2,idx2,dp),helper(str1,idx1,str2,idx2-1,dp));
+    }
+    public String reverse(String s)
+    {
+        StringBuilder sb=new StringBuilder();
+        for(int i=s.length()-1;i>=0;i--)
+        {
+            sb.append(s.charAt(i));
+        }
+        return sb.toString();
     }
 }
