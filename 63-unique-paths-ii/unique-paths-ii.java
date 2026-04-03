@@ -6,29 +6,29 @@ class Solution {
         {
             return 0;
         }
-       int dp[][]=new int[n][m];
-       dp[n-1][m-1]=1;
-       for(int i=n-1;i>=0;i--)
-       {
-        for(int j=m-1;j>=0;j--)
+        int dp[][]=new int[n][m];
+        dp[n-1][m-1]=1;
+        for(int i=n-1;i>=0;i--)
         {
-            if(obstacleGrid[i][j]==1)
+            for(int j=m-1;j>=0;j--)
             {
-                dp[i][j]=0;
-            }
-            else
-            {
-                if(i+1<n)
+                if(obstacleGrid[i][j]==1)
                 {
-                    dp[i][j]+=dp[i+1][j];
+                    dp[i][j]=0;
                 }
-                if(j+1<m)
+                else
                 {
-                    dp[i][j]+=dp[i][j+1];
+                    if(i+1<n)
+                    {
+                        dp[i][j]+=dp[i+1][j];
+                    }
+                    if(j+1<m)
+                    {
+                        dp[i][j]+=dp[i][j+1];
+                    }
                 }
             }
         }
-       }
-       return dp[0][0]; 
+        return dp[0][0];
     }
 }
