@@ -1,47 +1,47 @@
 class Solution {
     public int findTargetSumWays(int[] nums, int target) {
-        int n=nums.length;
         int sum=0;
-        for(int i=0;i<n;i++)
+        for(int i:nums)
         {
-            sum+=nums[i];
+            sum+=i;
         }
         if(sum-target<0 || (sum-target)%2==1)
         {
             return 0;
         }
-        int newtar=(sum-target)/2;
-        int dp[][]=new int[n][newtar+1];
+        int new_tar=(sum-target)/2;
+        int n=nums.length;
+        int dp[][]=new int[n][new_tar+1];
         for(int []i:dp)
         {
             Arrays.fill(i,-1);
         }
-        return diffsubset(nums,n-1,newtar,dp);
+        return helper(nums,n-1,new_tar,dp);
     }
-    public static int diffsubset(int nums[],int idx,int tar,int [][]dp)
+    public int helper(int nums[],int idx,int target,int [][]dp)
     {
         if(idx==0)
         {
-            if(nums[idx]==0 && tar==0)
+            if(nums[idx]==0 && target==0)
             {
                 return 2;
             }
-            if(tar==0 || nums[idx]==tar)
+            if(nums[idx]==target || target==0)
             {
                 return 1;
             }
             return 0;
         }
-        if(dp[idx][tar]!=-1)
+        if(dp[idx][target]!=-1)
         {
-            return dp[idx][tar];
+            return dp[idx][target];
         }
-        int nottake=diffsubset(nums,idx-1,tar,dp);
-        int take=0;
-        if(nums[idx]<=tar)
+        int notpick=helper(nums,idx-1,target,dp);
+        int pick=0;
+        if(nums[idx]<=target)
         {
-            take=diffsubset(nums,idx-1,tar-nums[idx],dp);
+            pick=helper(nums,idx-1,target-nums[idx],dp);
         }
-        return dp[idx][tar]=take+nottake;
+        return dp[idx][target]=pick+notpick;
     }
 }
