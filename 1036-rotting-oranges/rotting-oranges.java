@@ -3,19 +3,20 @@ class Solution {
         int n=grid.length;
         int m=grid[0].length;
         int res[][]=new int[n][m];
-        for(int i=0;i<n;i++)
+        for(int i[]:res)
         {
-            Arrays.fill(res[i],Integer.MAX_VALUE);
+            Arrays.fill(i,Integer.MAX_VALUE);
         }
-        for(int i=0;i<n*m;i++)
+        for(int i=0;i<grid.length;i++)
         {
-            int row=i/m;
-            int col=i%m;
-            if(grid[row][col]==2)
+            for(int j=0;j<grid[0].length;j++)
             {
-                grid[row][col]=1;
-                helper(grid,row,col,0,res);
-                grid[row][col]=2;
+                if(grid[i][j]==2)
+                {
+                    grid[i][j]=1;
+                    helper(grid,i,j,0,res);
+                    grid[i][j]=2;
+                }
             }
         }
         int ans=0;
@@ -35,23 +36,23 @@ class Solution {
         }
         return ans;
     }
-    public static void helper(int ar[][],int r,int c,int idx,int [][]res)
+    public void helper(int [][]grid,int i,int j,int time,int res[][])
     {
-        if(r<0 || c<0 || r>=ar.length || c>=ar[0].length || ar[r][c]==0)
+        if(i<0 || j<0 || i>=grid.length || j>=grid[0].length || grid[i][j]!=1)
         {
             return;
         }
-        if(idx>=res[r][c])
+        if(time>=res[i][j])
         {
             return;
         }
-        int prev=ar[r][c];
-        ar[r][c]=2;
-        res[r][c]=Math.min(res[r][c],idx);
-        helper(ar,r-1,c,idx+1,res);
-        helper(ar,r,c-1,idx+1,res);
-        helper(ar,r+1,c,idx+1,res);
-        helper(ar,r,c+1,idx+1,res);
-        ar[r][c]=prev;
+        int prev=grid[i][j];
+        grid[i][j]=2;
+        res[i][j]=Math.min(time,res[i][j]);
+        helper(grid,i,j-1,time+1,res);
+        helper(grid,i-1,j,time+1,res);
+        helper(grid,i+1,j,time+1,res);
+        helper(grid,i,j+1,time+1,res);
+        grid[i][j]=prev;
     }
 }
