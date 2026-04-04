@@ -1,18 +1,13 @@
 class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
         int n=nums.length;
-        // if(n==0 && k==0)
-        // {
-        // return new int[0];
-        // }
         int nger[]=new int[n];
-        int res[]=new int[n-k+1];
+        nger[n-1]=n;
         Stack<Integer> st=new Stack<>();
         st.push(n-1);
-        nger[n-1]=n;
-        for(int i=nums.length-2;i>=0;i--)
+        for(int i=n-2;i>=0;i--)
         {
-            while(st.size()>0 && nums[st.peek()]<nums[i])
+            while(st.size()!=0 && nums[i]>=nums[st.peek()])
             {
                 st.pop();
             }
@@ -20,14 +15,20 @@ class Solution {
             {
                 nger[i]=n;
             }
-            else{
+            else
+            {
                 nger[i]=st.peek();
             }
             st.push(i);
         }
-        for(int i=0;i<res.length;i++)
+        int res[]=new int[n-k+1];
+        int j=0;
+        for(int i=0;i<n-k+1;i++)
         {
-            int j=i;
+            if(i>j)
+            {
+                j=i;
+            }
             while(nger[j]<i+k)
             {
                 j=nger[j];
