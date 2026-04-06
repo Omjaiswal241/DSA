@@ -14,29 +14,30 @@
  * }
  */
 class Solution {
-    static class Diapair
+    static class DiaPair
     {
-        int ht,dia;
-        Diapair(int ht,int dia)
+        int dia;
+        int ht;
+        DiaPair(int dia,int ht)
         {
-            this.ht=ht;
             this.dia=dia;
+            this.ht=ht;
         }
     }
     public int diameterOfBinaryTree(TreeNode root) {
-        Diapair res=diameter(root);
+        DiaPair res=helper(root);
         return res.dia;
     }
-    public static Diapair diameter(TreeNode root)
+    public DiaPair helper(TreeNode root)
     {
         if(root==null)
         {
-            return new Diapair(-1,0);
+            return new DiaPair(0,-1);
         }
-        Diapair left=diameter(root.left);
-        Diapair right=diameter(root.right);
-        int diaofnode=left.ht+right.ht+2;
-        int diaoftree=Math.max(Math.max(left.dia,right.dia),diaofnode);
-        return new Diapair(Math.max(left.ht,right.ht)+1,diaoftree);
+        DiaPair leftPair=helper(root.left);
+        DiaPair rightPair=helper(root.right);
+        int dianode=leftPair.ht+rightPair.ht+2;
+        int diatree=Math.max(Math.max(leftPair.dia,rightPair.dia),dianode);
+        return new DiaPair(diatree,Math.max(leftPair.ht,rightPair.ht)+1);
     }
 }
