@@ -14,28 +14,23 @@
  * }
  */
 class Solution {
-    int maxsum;
+    int maxsum=Integer.MIN_VALUE;
     public int maxPathSum(TreeNode root) {
-        maxsum=Integer.MIN_VALUE;
-        solve(root);
+        helper(root);
         return maxsum;
     }
-    public int solve(TreeNode root)
+    public int helper(TreeNode root)
     {
         if(root==null)
         {
             return 0;
         }
-        int left=solve(root.left);
-        int right=solve(root.right);
-
-        int neeche_hi_milgaya_ans=left+right+root.val;
-
-        int koi_ek_acha=Math.max(left,right)+root.val;
-
-        int only_root_acha=root.val;
-
-        maxsum=Math.max(Math.max(Math.max(neeche_hi_milgaya_ans,maxsum),koi_ek_acha),only_root_acha);
-        return Math.max(koi_ek_acha,only_root_acha);
+        int left=helper(root.left);
+        int right=helper(root.right);
+        int neeche_hi_milgaya=left+right+root.val;
+        int ek_path_sahi_hai=Math.max(left,right)+root.val;
+        int only_root=root.val;
+        maxsum=Math.max(Math.max(Math.max(neeche_hi_milgaya,ek_path_sahi_hai),only_root),maxsum);
+        return Math.max(ek_path_sahi_hai,only_root);
     }
 }
