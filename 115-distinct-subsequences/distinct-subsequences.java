@@ -1,6 +1,8 @@
 class Solution {
     public int numDistinct(String s, String t) {
-        int dp[][]=new int[s.length()][t.length()];
+        int n=s.length();
+        int m=t.length();
+        int dp[][]=new int[n][m];
         for(int i[]:dp)
         {
             Arrays.fill(i,-1);
