@@ -1,9 +1,9 @@
 class Solution {
     public int climbStairs(int n) {
-       int res=climb(n,new int[n+1]);
-       return res; 
+        int res=helper(n,new int[n+1]);
+        return res;
     }
-    public static int climb(int n,int dp[])
+    public int helper(int n,int dp[])
     {
         if(n==0)
         {
@@ -14,13 +14,13 @@ class Solution {
             return dp[n];
         }
         int ways=0;
-        if(n-1>=0)
+        if(n>=1)
         {
-            ways+=climb(n-1,dp);
+            ways+=helper(n-1,dp);
         }
-        if(n-2>=0)
+        if(n>=2)
         {
-            ways+=climb(n-2,dp);
+            ways+=helper(n-2,dp);
         }
         return dp[n]=ways;
     }
