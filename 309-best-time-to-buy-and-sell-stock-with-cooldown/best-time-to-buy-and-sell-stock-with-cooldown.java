@@ -1,6 +1,8 @@
 class Solution {
     public int maxProfit(int[] prices) {
-        int obp=-prices[0],osp=0,ocp=0;
+        int obp=-prices[0];
+        int osp=0;
+        int ocp=0;
         for(int i=1;i<prices.length;i++)
         {
             int nbp=Math.max(obp,ocp-prices[i]);
