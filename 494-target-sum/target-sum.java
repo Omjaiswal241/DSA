@@ -5,43 +5,43 @@ class Solution {
         {
             sum+=i;
         }
-        if(sum-target<0 || (sum-target)%2==1)
+        int temp=sum-target;
+        if(temp%2==1 || temp<0)
         {
             return 0;
         }
-        int new_tar=(sum-target)/2;
-        int n=nums.length;
-        int dp[][]=new int[n][new_tar+1];
-        for(int []i:dp)
+        int tar=temp/2;
+        int dp[][]=new int[nums.length][tar+1];
+        for(int i[]:dp)
         {
             Arrays.fill(i,-1);
         }
-        return helper(nums,n-1,new_tar,dp);
+        return helper(nums,nums.length-1,tar,dp);
     }
-    public int helper(int nums[],int idx,int target,int [][]dp)
+    public int helper(int nums[],int idx,int tar,int dp[][])
     {
         if(idx==0)
         {
-            if(nums[idx]==0 && target==0)
+            if(nums[idx]==0 && tar==0)
             {
                 return 2;
             }
-            if(nums[idx]==target || target==0)
+            if(nums[idx]==tar || tar==0)
             {
                 return 1;
             }
             return 0;
         }
-        if(dp[idx][target]!=-1)
+        if(dp[idx][tar]!=-1)
         {
-            return dp[idx][target];
+            return dp[idx][tar];
         }
-        int notpick=helper(nums,idx-1,target,dp);
-        int pick=0;
-        if(nums[idx]<=target)
+        int take=0;
+        if(nums[idx]<=tar)
         {
-            pick=helper(nums,idx-1,target-nums[idx],dp);
+            take=helper(nums,idx-1,tar-nums[idx],dp);
         }
-        return dp[idx][target]=pick+notpick;
+        int nottake=helper(nums,idx-1,tar,dp);
+        return dp[idx][tar]=take+nottake;
     }
 }
