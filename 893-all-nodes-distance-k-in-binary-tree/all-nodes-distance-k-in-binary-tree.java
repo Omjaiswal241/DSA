@@ -9,76 +9,76 @@
  */
 class Solution {
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
-        List<Integer> li=new ArrayList<Integer>();
+        List<Integer> res=new ArrayList<>();
         if(root==null)
         {
-            return li;
+            return res;
         }
-        List<TreeNode> temp=nodetoroot(root,target.val);
-        for(int idx=0;idx<temp.size();idx++)
+        ArrayList<TreeNode> temp=nodetoroot(root,target);
+        for(int i=0;i<temp.size();i++)
         {
-            TreeNode curr=temp.get(idx);
-            if(idx==0)
+            TreeNode curr=temp.get(i);
+            if(i==0)
             {
-                kleveldown(curr,k,li);
+                kdistfar(curr,k,res);
             }
             else
             {
-                int dac=idx;
-                int rdist=k-dac;
-                if(rdist==0)
+                int dac=i;
+                int rd=k-i;
+                if(rd==0)
                 {
-                    li.add(curr.val);
+                    res.add(curr.val);
                 }
                 else
                 {
-                    TreeNode prev=temp.get(idx-1);
-                    if(curr.left==prev)
-                    {
-                        kleveldown(curr.right,rdist-1,li);
-                    }
-                    else
-                    {
-                        kleveldown(curr.left,rdist-1,li);
-                    }
+                TreeNode prev=temp.get(i-1);
+                if(prev==curr.left)
+                {
+                    kdistfar(curr.right,rd-1,res);
+                }
+                else
+                {
+                    kdistfar(curr.left,rd-1,res);
+                }
                 }
             }
         }
-        return li;
+        return res;
     }
-    public static void kleveldown(TreeNode root,int k,List<Integer> li)
+    public void kdistfar(TreeNode root,int k,List<Integer> res)
     {
-        if(root==null)
+        if(root==null || k<0)
         {
             return;
         }
         if(k==0)
         {
-            li.add(root.val);
+            res.add(root.val);
             return;
         }
-        kleveldown(root.left,k-1,li);
-        kleveldown(root.right,k-1,li);
+        kdistfar(root.left,k-1,res);
+        kdistfar(root.right,k-1,res);
     }
-    public static List<TreeNode> nodetoroot(TreeNode root,int target)
+    public ArrayList<TreeNode> nodetoroot(TreeNode root,TreeNode tar)
     {
         if(root==null)
         {
             return new ArrayList<>();
         }
-        if(root.val==target)
+        if(root.val==tar.val)
         {
-            List<TreeNode> base=new ArrayList<>();
+            ArrayList<TreeNode> base=new ArrayList<>();
             base.add(root);
             return base;
         }
-        List<TreeNode> left=nodetoroot(root.left,target);
+        ArrayList<TreeNode> left=nodetoroot(root.left,tar);
         if(left.size()!=0)
         {
             left.add(root);
             return left;
         }
-        List<TreeNode> right=nodetoroot(root.right,target);
+        ArrayList<TreeNode> right=nodetoroot(root.right,tar);
         if(right.size()!=0)
         {
             right.add(root);
