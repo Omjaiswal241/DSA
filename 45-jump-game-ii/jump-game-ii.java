@@ -2,25 +2,19 @@ class Solution {
     public int jump(int[] nums) {
         int n=nums.length;
         int dp[]=new int[n];
+        Arrays.fill(dp,Integer.MAX_VALUE);
+        dp[n-1]=0;
         for(int i=n-2;i>=0;i--)
         {
-            int a=nums[i];
-            int jumps=Integer.MAX_VALUE;
-            while(a>0)
+            int k=nums[i];
+            while(k>0)
             {
-                if(i+a<n)
+                int a=(i+k<n)?dp[i+k]:0;
+                if(a!=Integer.MAX_VALUE)
                 {
-                    jumps=Math.min(dp[i+a],jumps);
+                    dp[i]=Math.min(a+1,dp[i]);
                 }
-                a--;
-            }
-            if(jumps!=Integer.MAX_VALUE)
-            {
-                dp[i]=jumps+1;
-            }
-            else
-            {
-                dp[i]=Integer.MAX_VALUE;
+                k--;
             }
         }
         return dp[0];
