@@ -2,7 +2,8 @@ class Solution {
     public int splitArray(int[] nums, int k) {
         int low=Integer.MIN_VALUE;
         int high=0;
-        for(int i=0;i<nums.length;i++)
+        int n=nums.length;
+        for(int i=0;i<n;i++)
         {
             if(nums[i]>low)
             {
@@ -12,8 +13,8 @@ class Solution {
         }
         while(low<=high)
         {
-            int mid=low+(high-low)/2;
-            if(cansplit(nums,mid,k))
+            int mid=(low+(high-low)/2);
+            if(helper(nums,mid,k))
             {
                 high=mid-1;
             }
@@ -24,20 +25,20 @@ class Solution {
         }
         return low;
     }
-    public static boolean cansplit(int nums[],int mid,int k)
+    public boolean helper(int nums[],int mid,int k)
     {
-        int sum=0,count=0;
+        int cnt=1;
+        int sum=0;
         for(int i=0;i<nums.length;i++)
         {
             if(sum+nums[i]>mid)
             {
                 sum=0;
-                count++;
+                cnt++;
             }
             sum+=nums[i];
         }
-        count++;
-        if(count<=k)
+        if(cnt<=k)
         {
             return true;
         }
