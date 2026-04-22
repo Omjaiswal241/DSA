@@ -1,28 +1,33 @@
 class Solution {
     public int numSubmatrixSumTarget(int[][] matrix, int target) {
-        int ans=0,m=matrix.length,n=matrix[0].length;
-        for(int i=0;i<m;i++)
+        int res=0;
+        int n=matrix.length;
+        int m=matrix[0].length;
+        for(int i=0;i<n;i++)
         {
-            for(int c=1;c<n;c++)
+            for(int j=0;j<m;j++)
             {
-                matrix[i][c]+=matrix[i][c-1];
+                matrix[i][j]=(j>0)?matrix[i][j]+matrix[i][j-1]:matrix[i][j];
             }
         }
-        for(int colstart=0;colstart<n;colstart++)
+        for(int sc=0;sc<m;sc++)
         {
-            for(int colend=colstart;colend<n;colend++)
+            for(int ec=sc;ec<m;ec++)
             {
                 HashMap<Integer,Integer> hm=new HashMap<>();
                 hm.put(0,1);
-                int currsum=0;
-                for(int row=0;row<m;row++)
+                int csum=0;
+                for(int r=0;r<n;r++)
                 {
-                    currsum+=matrix[row][colend]-(colstart>0?matrix[row][colstart-1]:0);
-                    ans+=hm.getOrDefault(currsum-target,0);
-                    hm.put(currsum,hm.getOrDefault(currsum,0)+1);
+                    csum+=(sc>0)?matrix[r][ec]-matrix[r][sc-1]:matrix[r][ec];
+                    if(hm.containsKey(csum-target))
+                    {
+                        res+=hm.get(csum-target);
+                    }
+                    hm.put(csum,hm.getOrDefault(csum,0)+1);
                 }
             }
         }
-        return ans;
+        return res;
     }
 }
