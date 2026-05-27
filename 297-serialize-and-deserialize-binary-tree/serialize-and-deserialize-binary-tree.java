@@ -15,46 +15,48 @@ public class Codec {
         {
             return "";
         }
+        String s="";
         Queue<TreeNode> qu=new LinkedList<>();
         qu.add(root);
-        StringBuilder sb=new StringBuilder();
         while(qu.size()>0)
         {
-            TreeNode front=qu.remove();
-            if(front==null)
+            TreeNode temp=qu.remove();
+            if(temp==null)
             {
-                sb.append("n ");
-                continue;
+                s+='n'+" ";
             }
-            sb.append(front.val+" ");
-            qu.add(front.left);
-            qu.add(front.right);
+            else
+            {
+                s+=temp.val+" ";
+                qu.add(temp.left);
+                qu.add(temp.right);
+            }
         }
-        return sb.toString();
+        return s;
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        if(data.equals(""))
+        if(data=="")
         {
             return null;
         }
-        String [] values=data.split(" ");
-        TreeNode root=new TreeNode(Integer.parseInt(values[0]));
+        String ar[]=data.split(" ");
+        TreeNode root=new TreeNode(Integer.parseInt(ar[0]+""));
         Queue<TreeNode> qu=new ArrayDeque<>();
         qu.add(root);
-        for(int i=1;i<values.length;i++)
+        for(int i=1;i<ar.length;i++)
         {
             TreeNode parent=qu.remove();
-            if(!values[i].equals("n"))
+            if(!ar[i].equals("n"))
             {
-                TreeNode left=new TreeNode(Integer.parseInt(values[i]));
+                TreeNode left=new TreeNode(Integer.parseInt(ar[i]+""));
                 parent.left=left;
                 qu.add(left);
             }
-            if(!values[++i].equals("n"))
+            if(!ar[++i].equals("n"))
             {
-                TreeNode right=new TreeNode(Integer.parseInt(values[i]));
+                TreeNode right=new TreeNode(Integer.parseInt(ar[i]+""));
                 parent.right=right;
                 qu.add(right);
             }
