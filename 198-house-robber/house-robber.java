@@ -1,11 +1,11 @@
 class Solution {
     public int rob(int[] nums) {
-        int oinc=nums[0];
         int oexc=0;
+        int oinc=nums[0];
         for(int i=1;i<nums.length;i++)
         {
             int nexc=Math.max(oinc,oexc);
-            int ninc=nums[i]+oexc;
+            int ninc=oexc+nums[i];
             oexc=nexc;
             oinc=ninc;
         }
