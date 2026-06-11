@@ -34,17 +34,17 @@ class Solution {
         }
         return false;
     }
-    public boolean issafe(char[][] board,int r,int c,char d)
+    public boolean issafe(char [][]board,int r,int c,char d)
     {
         int srr=3*(r/3);
         int src=3*(c/3);
         for(int i=0;i<9;i++)
         {
-            if(board[r][i]==d)
+            if(board[i][c]==d)
             {
                 return false;
             }
-            if(board[i][c]==d)
+            if(board[r][i]==d)
             {
                 return false;
             }
@@ -61,4 +61,15 @@ class Solution {
         }
         return true;
     }
+
+
+
+
+
+
+
+
+
+
+
 }
