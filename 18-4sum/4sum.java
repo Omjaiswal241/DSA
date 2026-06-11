@@ -2,43 +2,42 @@ class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
         Arrays.sort(nums);
         List<List<Integer>> res=new ArrayList<>();
-        int n=nums.length;
         HashSet<String> hs=new HashSet<>();
+        int n=nums.length;
         for(int i=0;i<n-3;i++)
         {
             for(int j=i+1;j<n-2;j++)
             {
-                int low=j+1;
-                int high=n-1;
-                while(low<high)
+                int l=j+1,h=n-1;
+                while(l<h)
                 {
                     long sum=nums[i];
                     sum+=nums[j];
-                    sum+=nums[low];
-                    sum+=nums[high];
-                    if(sum==target)
+                    sum+=nums[l];
+                    sum+=nums[h];
+                    if(sum>target)
+                    {
+                        h--;
+                    }
+                    else if(sum<target)
+                    {
+                        l++;
+                    }
+                    else
                     {
                         StringBuilder sb=new StringBuilder();
                         sb.append(nums[i]);
                         sb.append(nums[j]);
-                        sb.append(nums[low]);
-                        sb.append(nums[high]);
+                        sb.append(nums[l]);
+                        sb.append(nums[h]);
                         String s=sb.toString();
                         if(!hs.contains(s))
                         {
                             hs.add(s);
-                            res.add(Arrays.asList(nums[i],nums[j],nums[low],nums[high]));
+                            res.add(Arrays.asList(nums[i],nums[j],nums[l],nums[h]));
                         }
-                        low++;
-                        high--;
-                    }
-                    else if(sum>target)
-                    {
-                        high--;
-                    }
-                    else
-                    {
-                        low++;
+                        l++;
+                        h--;
                     }
                 }
             }
