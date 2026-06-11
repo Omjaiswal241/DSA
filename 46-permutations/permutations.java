@@ -4,7 +4,7 @@ class Solution {
         helper(nums,0);
         return res;
     }
-    public void helper(int []nums,int idx)
+    public void helper(int nums[],int idx)
     {
         if(idx==nums.length)
         {
@@ -13,7 +13,7 @@ class Solution {
             {
                 li.add(i);
             }
-            res.add(li);
+            res.add(new ArrayList<>(li));
             return;
         }
         for(int i=idx;i<nums.length;i++)
