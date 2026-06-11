@@ -1,32 +1,36 @@
 class Solution {
     public int minDistance(String word1, String word2) {
-        int idx1=word1.length();
-        int idx2=word2.length();
-        int dp[][]=new int[idx1][idx2];
-        for(int i[]:dp)
+        int i=word1.length();
+        int j=word2.length();
+        int dp[][]=new int[i][j];
+        for(int f[]:dp)
         {
-            Arrays.fill(i,-1);
+            Arrays.fill(f,-1);
         }
-        return helper(word1,idx1-1,word2,idx2-1,dp);
+        return helper(word1,i-1,word2,j-1,dp);
     }
-    public int helper(String s,int idx1,String t,int idx2,int [][]dp)
+    public int helper(String s,int i,String p,int j,int dp[][])
     {
-        if(idx2<0)
+        if(i<0 && j<0)
         {
-            return idx1+1;
+            return 0;
         }
-        if(idx1<0)
+        if(i<0)
         {
-            return idx2+1;
+            return j+1;
         }
-        if(dp[idx1][idx2]!=-1)
+        if(j<0)
         {
-            return dp[idx1][idx2];
+            return i+1;
         }
-        if(s.charAt(idx1)==t.charAt(idx2))
+        if(dp[i][j]!=-1)
         {
-            return dp[idx1][idx2]=helper(s,idx1-1,t,idx2-1,dp);
+            return dp[i][j];
         }
-        return dp[idx1][idx2]=1+Math.min(Math.min(helper(s,idx1-1,t,idx2,dp),helper(s,idx1,t,idx2-1,dp)),helper(s,idx1-1,t,idx2-1,dp));
+        if(s.charAt(i)==p.charAt(j))
+        {
+            return dp[i][j]=helper(s,i-1,p,j-1,dp);
+        }
+        return dp[i][j]=1+Math.min(helper(s,i-1,p,j-1,dp),Math.min(helper(s,i,p,j-1,dp),helper(s,i-1,p,j,dp)));
     }
 }
