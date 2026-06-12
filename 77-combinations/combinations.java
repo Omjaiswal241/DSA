@@ -16,8 +16,7 @@ class Solution {
                     li.add(i);
                 }
             }
-            res.add(li);
-            return;
+            res.add(new ArrayList<>(li));
         }
         for(int i=lb+1;i<box.length;i++)
         {
