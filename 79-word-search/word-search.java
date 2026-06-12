@@ -2,14 +2,15 @@ class Solution {
     public boolean exist(char[][] board, String word) {
         int n=board.length;
         int m=board[0].length;
-        int ar[][]=new int[n][m];
+        int visited[][]=new int[n][m];
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<m;j++)
             {
-                if(board[i][j]==word.charAt(0))
+                char z=board[i][j];
+                if(z==word.charAt(0))
                 {
-                    boolean res=helper(board,i,j,word,0,ar);
+                    boolean res=helper(board,0,i,j,visited,word);
                     if(res)
                     {
                         return true;
@@ -19,22 +20,22 @@ class Solution {
         }
         return false;
     }
-    public boolean helper(char [][]board,int i,int j,String s,int idx,int ar[][])
+    public boolean helper(char [][]board,int idx,int r,int c,int [][]visited,String word)
     {
-        if(idx==s.length())
+        if(idx==word.length())
         {
             return true;
         }
-        if(i<0 || j<0 || i>=board.length || j>=board[0].length || ar[i][j]==1 || board[i][j]!=s.charAt(idx))
+        if(r<0 || c<0 || r>=board.length || c>=board[0].length || visited[r][c]==1 || board[r][c]!=word.charAt(idx))
         {
             return false;
         }
-        ar[i][j]=1;
-        boolean top=helper(board,i-1,j,s,idx+1,ar);
-        boolean left=helper(board,i,j-1,s,idx+1,ar);
-        boolean bottom=helper(board,i+1,j,s,idx+1,ar);
-        boolean right=helper(board,i,j+1,s,idx+1,ar);
-        ar[i][j]=0;
-        return top || left ||bottom || right;
+        visited[r][c]=1;
+        boolean top=helper(board,idx+1,r-1,c,visited,word);
+        boolean left=helper(board,idx+1,r,c-1,visited,word);
+        boolean down=helper(board,idx+1,r+1,c,visited,word);
+        boolean right=helper(board,idx+1,r,c+1,visited,word);
+        visited[r][c]=0;
+        return top || left || down || right;
     }
 }
