@@ -5,20 +5,24 @@ class Solution {
         {
             if(i<=n)
             {
-            helper(n,i);
+                helper(i,n);
             }
         }
         return res;
     }
-    public void helper(int n,int i)
+    public void helper(int i,int n)
     {
         res.add(i);
         for(int j=0;j<=9;j++)
         {
-            int f=i*10+j;
-            if(f<=n)
+            int d=i*10+j;
+            if(d<=n)
             {
-                helper(n,f);
+                helper(d,n);
+            }
+            else
+            {
+                break;
             }
         }
     }
