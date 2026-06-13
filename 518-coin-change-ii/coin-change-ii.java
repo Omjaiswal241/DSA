@@ -6,7 +6,7 @@ class Solution {
         {
             for(int i=coin;i<=amount;i++)
             {
-                dp[i]=dp[i]+dp[i-coin];
+                dp[i]=dp[i-coin]+dp[i];
             }
         }
         return dp[amount];
