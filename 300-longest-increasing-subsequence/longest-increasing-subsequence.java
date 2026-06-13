@@ -1,28 +1,34 @@
 class Solution {
     public int lengthOfLIS(int[] nums) {
-        int n=nums.length;
-        int dp[][]=new int[n][n];
-        for(int i[]:dp)
+        List<Integer> li=new ArrayList<>();
+        for(int i=0;i<nums.length;i++)
         {
-            Arrays.fill(i,-1);
+            if(li.size()==0)
+            {
+                li.add(nums[i]);
+            }
+            else
+            {
+                int idx=findidx(li,nums[i]);
+                if(idx<li.size())
+                {
+                    li.remove(idx);
+                }
+                li.add(idx,nums[i]);
+            }
         }
-        return helper(nums,0,-1,dp);
+        return li.size();
     }
-    public int helper(int nums[],int idx,int prev_idx,int [][]dp)
+    public int findidx(List<Integer> li,int k)
     {
-        if(idx==nums.length)
+        int pos=-1;
+        for(int i=0;i<li.size();i++)
         {
-            return 0;
+            if(li.get(i)>=k)
+            {
+                return i;
+            }
         }
-        if(dp[idx][prev_idx+1]!=-1)
-        {
-            return dp[idx][prev_idx+1];
-        }
-        int len=helper(nums,idx+1,prev_idx,dp);
-        if(prev_idx==-1 || nums[idx]>nums[prev_idx])
-        {
-            len=Math.max(len,1+helper(nums,idx+1,idx,dp));
-        }
-        return dp[idx][prev_idx+1]=len;
+        return li.size();
     }
 }
