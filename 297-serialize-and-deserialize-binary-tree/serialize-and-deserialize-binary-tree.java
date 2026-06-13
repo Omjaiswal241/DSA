@@ -15,34 +15,32 @@ public class Codec {
         {
             return "";
         }
-        String s="";
+        StringBuilder sb=new StringBuilder();
         Queue<TreeNode> qu=new LinkedList<>();
         qu.add(root);
-        while(qu.size()>0)
+        while(qu.size()!=0)
         {
-            TreeNode temp=qu.remove();
-            if(temp==null)
+            TreeNode curr=qu.remove();
+            if(curr==null)
             {
-                s+='n'+" ";
+                sb.append("n ");
+                continue;
             }
-            else
-            {
-                s+=temp.val+" ";
-                qu.add(temp.left);
-                qu.add(temp.right);
-            }
+            sb.append(curr.val+" ");
+            qu.add(curr.left);
+            qu.add(curr.right);
         }
-        return s;
+        return sb.toString();
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        if(data=="")
+        if(data.equals(""))
         {
             return null;
         }
         String ar[]=data.split(" ");
-        TreeNode root=new TreeNode(Integer.parseInt(ar[0]+""));
+        TreeNode root=new TreeNode(Integer.parseInt(ar[0]));
         Queue<TreeNode> qu=new ArrayDeque<>();
         qu.add(root);
         for(int i=1;i<ar.length;i++)
@@ -50,17 +48,17 @@ public class Codec {
             TreeNode parent=qu.remove();
             if(!ar[i].equals("n"))
             {
-                TreeNode left=new TreeNode(Integer.parseInt(ar[i]+""));
+                TreeNode left=new TreeNode(Integer.parseInt(ar[i]));
                 parent.left=left;
                 qu.add(left);
             }
             if(!ar[++i].equals("n"))
             {
-                TreeNode right=new TreeNode(Integer.parseInt(ar[i]+""));
+                TreeNode right=new TreeNode(Integer.parseInt(ar[i]));
                 parent.right=right;
                 qu.add(right);
             }
-        }
+        } 
         return root;
     }
 }
