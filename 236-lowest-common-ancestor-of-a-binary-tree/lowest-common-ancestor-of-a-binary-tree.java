@@ -9,46 +9,36 @@
  */
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        ArrayList<TreeNode> a=nodetoroot(root,p);
-        ArrayList<TreeNode> b=nodetoroot(root,q);
-        int x=a.size()-1;
-        int y=b.size()-1;
-        while(x>=0 && y>=0)
+        List<TreeNode> l1=nodetoroot(root,p);
+        List<TreeNode> l2=nodetoroot(root,q);
+        int p1=l1.size()-1,p2=l2.size()-1;
+        while((p1>=0 && p2>=0) && l1.get(p1)==l2.get(p2))
         {
-            if(a.get(x).val==b.get(y).val)
-            {
-                x--;
-                y--;
-            }
-            else
-            {
-                break;
-            }
+            p1--;
+            p2--;
         }
-        x++;
-        y++;
-        return a.get(x);
+        return l1.get(p1+1);
     }
-    public ArrayList<TreeNode> nodetoroot(TreeNode root,TreeNode tar)
+    public List<TreeNode> nodetoroot(TreeNode root,TreeNode p)
     {
         if(root==null)
         {
             return new ArrayList<>();
         }
-        if(root==tar)
+        if(root==p)
         {
-            ArrayList<TreeNode> base=new ArrayList<>();
+            List<TreeNode> base=new ArrayList<>();
             base.add(root);
             return base;
         }
-        ArrayList<TreeNode> left=nodetoroot(root.left,tar);
-        if(left.size()!=0)
+        List<TreeNode> left=nodetoroot(root.left,p);
+        if(left.size()>0)
         {
             left.add(root);
             return left;
         }
-        ArrayList<TreeNode> right=nodetoroot(root.right,tar);
-        if(right.size()!=0)
+        List<TreeNode> right=nodetoroot(root.right,p);
+        if(right.size()>0)
         {
             right.add(root);
             return right;
