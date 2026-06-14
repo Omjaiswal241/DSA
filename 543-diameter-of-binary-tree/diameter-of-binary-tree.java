@@ -14,10 +14,9 @@
  * }
  */
 class Solution {
-    static class DiaPair
+    class DiaPair
     {
-        int dia;
-        int ht;
+        int dia,ht;
         DiaPair(int dia,int ht)
         {
             this.dia=dia;
@@ -34,10 +33,10 @@ class Solution {
         {
             return new DiaPair(0,-1);
         }
-        DiaPair leftPair=helper(root.left);
-        DiaPair rightPair=helper(root.right);
-        int dianode=leftPair.ht+rightPair.ht+2;
-        int diatree=Math.max(Math.max(leftPair.dia,rightPair.dia),dianode);
-        return new DiaPair(diatree,Math.max(leftPair.ht,rightPair.ht)+1);
+        DiaPair left=helper(root.left);
+        DiaPair right=helper(root.right);
+        int dianode=(left.ht+right.ht)+2;
+        int diaoftree=Math.max(Math.max(left.dia,right.dia),dianode);
+        return new DiaPair(diaoftree,Math.max(left.ht,right.ht)+1);
     }
 }
