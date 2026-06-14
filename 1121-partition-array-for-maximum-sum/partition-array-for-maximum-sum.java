@@ -5,10 +5,9 @@ class Solution {
         Arrays.fill(dp,-1);
         return helper(arr,0,k,dp);
     }
-    public static int helper(int ar[],int idx,int k,int dp[])
+    public int helper(int ar[],int idx,int k,int dp[])
     {
-        int n=ar.length;
-        if(idx==n)
+        if(idx==ar.length)
         {
             return 0;
         }
@@ -16,16 +15,16 @@ class Solution {
         {
             return dp[idx];
         }
-        int maxsum=Integer.MIN_VALUE;
-        int len=0;
+        int final_ans=Integer.MIN_VALUE;
+        int ans=Integer.MIN_VALUE;
         int max=Integer.MIN_VALUE;
-        for(int i=idx;i<Math.min(n,idx+k);i++)
+        for(int j=idx;j<Math.min(ar.length,idx+k);j++)
         {
-            len++;
-            max=Math.max(ar[i],max);
-            int sum=(len*max)+helper(ar,i+1,k,dp);
-            maxsum=Math.max(sum,maxsum);
+            max=Math.max(max,ar[j]);
+            int len=j-idx+1;
+            ans=(max*len)+helper(ar,j+1,k,dp);
+            final_ans=Math.max(final_ans,ans);
         }
-        return dp[idx]=maxsum;
+        return dp[idx]=final_ans;
     }
 }
