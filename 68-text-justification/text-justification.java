@@ -2,44 +2,44 @@ class Solution {
     int MAXWIDTH;
     public List<String> fullJustify(String[] words, int maxWidth) {
         List<String> res=new ArrayList<>();
-        int i=0;
-        int n=words.length;
         MAXWIDTH=maxWidth;
+        int n=words.length;
+        int i=0;
         while(i<n)
         {
-            int letterscount=words[i].length();
+            int lettercount=words[i].length();
             int gaddhe=0;
             int j=i+1;
-            while(j<n && letterscount+gaddhe+words[j].length()+1<=maxWidth)
+            while(j<n && words[j].length()+1+lettercount+gaddhe<=maxWidth)
             {
-                letterscount+=words[j].length();
-                gaddhe++;
+                lettercount+=words[j].length();
+                gaddhe+=1;
                 j=j+1;
             }
-            int remaining=maxWidth-letterscount;
-            int extrawordspace=(gaddhe==0)?0:remaining/gaddhe;
+            int remaining=maxWidth-lettercount;
+            int space=(gaddhe==0)?0:remaining/gaddhe;
             int extraspace=(gaddhe==0)?0:remaining%gaddhe;
             if(j==n)
             {
-                extrawordspace=1;
+                space=1;
                 extraspace=0;
             }
-            res.add(getString(i,j,extrawordspace,extraspace,words));
+            res.add(addString(words,i,j,space,extraspace));
             i=j;
         }
         return res;
     }
-    public String getString(int i,int j,int extrawordspace,int extraspace,String []words)
+    public String addString(String words[],int i,int j,int space,int extraspace)
     {
         StringBuilder sb=new StringBuilder();
-        for(int k=i;k<j;k++)
+        for(int f=i;f<j;f++)
         {
-            sb.append(words[k]);
-            if(k==j-1)
+            sb.append(words[f]);
+            if(f==j-1)
             {
                 continue;
             }
-            for(int f=1;f<=extrawordspace;f++)
+            for(int k=0;k<space;k++)
             {
                 sb.append(" ");
             }
