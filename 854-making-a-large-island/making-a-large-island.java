@@ -1,33 +1,30 @@
 class Solution {
     public int largestIsland(int[][] grid) {
-        int m=grid.length;
-        int n=grid[0].length;
-        int final_res=0;
-
-        int mark=2;
+        int n=grid.length;
+        int mark=1;
+        int res=Integer.MIN_VALUE;
         HashMap<Integer,Integer> hm=new HashMap<>();
-        for(int i=0;i<m;i++)
+        for(int i=0;i<n;i++)
         {
             for(int j=0;j<n;j++)
             {
                 if(grid[i][j]==1)
                 {
-                    int size=dfs(grid,i,j,mark);
-                    final_res=Math.max(size,final_res);
-                    hm.put(mark,size);
                     mark++;
+                    int size=helper(grid,i,j,mark);
+                    res=Math.max(size,res);
+                    hm.put(mark,size);
                 }
             }
         }
-
-        for(int i=0;i<m;i++)
+        for(int i=0;i<n;i++)
         {
             for(int j=0;j<n;j++)
             {
                 if(grid[i][j]==0)
                 {
+                    int g=1;
                     HashSet<Integer> hs=new HashSet<>();
-                    int f=1;
                     if(i>0)
                     {
                         hs.add(grid[i-1][j]);
@@ -36,7 +33,7 @@ class Solution {
                     {
                         hs.add(grid[i][j-1]);
                     }
-                    if(i<m-1)
+                    if(i<n-1)
                     {
                         hs.add(grid[i+1][j]);
                     }
@@ -44,27 +41,26 @@ class Solution {
                     {
                         hs.add(grid[i][j+1]);
                     }
-                    for(int z:hs)
+                    for(int f:hs)
                     {
-                        if(z!=0)
+                        if(f!=0)
                         {
-                            f+=hm.get(z);
-                        }
+                            g+=hm.get(f);
+                        }                        
                     }
-                    final_res=Math.max(final_res,f);
+                    res=Math.max(res,g);
                 }
             }
         }
-        return final_res;
+        return res;
     }
-
-    public int dfs(int grid[][],int i,int j,int mark)
+    public int helper(int grid[][],int i,int j,int mark)
     {
-        if(i<0 || j<0 || i>=grid.length || j>=grid[0].length || grid[i][j]!=1)
+        if(i<0 || j<0 || i>=grid.length || j>=grid.length || grid[i][j]!=1)
         {
             return 0;
         }
         grid[i][j]=mark;
-        return 1+dfs(grid,i-1,j,mark)+dfs(grid,i,j-1,mark)+dfs(grid,i+1,j,mark)+dfs(grid,i,j+1,mark);
+        return 1+helper(grid,i-1,j,mark)+helper(grid,i,j-1,mark)+helper(grid,i+1,j,mark)+helper(grid,i,j+1,mark);
     }
 }
