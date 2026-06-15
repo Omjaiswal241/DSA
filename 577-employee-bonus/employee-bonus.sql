@@ -1,6 +1,6 @@
--- Write your PostgreSQL query statement below
-SELECT name,bonus
-From Employee
-left Join Bonus
-ON Employee.empId=Bonus.empId
-WHERE Bonus.bonus<1000 OR Bonus.bonus is null
+# Write your MySQL query statement below
+select e.name,b.bonus
+from Employee e
+left join Bonus b
+On e.empId=b.empId
+Having b.bonus<1000 OR b.bonus IS NULL
