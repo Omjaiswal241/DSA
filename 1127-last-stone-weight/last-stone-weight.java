@@ -11,8 +11,11 @@ class Solution {
             int a=pq.remove();
             int b=pq.remove();
             int c=a-b;
-            pq.add(c);
+            if(c!=0)
+            {
+                pq.add(c);
+            }
         }
-        return pq.remove();
+        return (pq.size()==1)?pq.remove():0;
     }
 }
