@@ -4,50 +4,54 @@ class Solution {
         {
             return new int[]{-1,-1};
         }
-        int first=firstoccur(nums,target,0,nums.length-1);
-        int last=lastoccur(nums,target,0,nums.length-1);
-        return new int[]{first,last};
+        int a=first(nums,target);
+        int b=last(nums,target);
+        return new int[]{a,b};
     }
-    public int firstoccur(int ar[],int target,int low,int high)
+    public int first(int nums[],int target)
     {
         int ans=-1;
-        while(low<=high)
+        int n=nums.length;
+        int l=0,h=n-1;
+        while(l<=h)
         {
-            int mid=low+(high-low)/2;
-            if(ar[mid]==target)
+            int m=l+(h-l)/2;
+            if(nums[m]==target)
             {
-                ans=mid;
-                high=mid-1;
+                ans=m;
+                h=m-1;
             }
-            else if(ar[mid]>target)
+            else if(nums[m]>target)
             {
-                high=mid-1;
+                h=m-1;
             }
             else
             {
-                low=mid+1;
+                l=m+1;
             }
         }
         return ans;
     }
-    public int lastoccur(int ar[],int target,int low,int high)
+    public int last(int nums[],int target)
     {
         int ans=-1;
-        while(low<=high)
+        int n=nums.length;
+        int l=0,h=n-1;
+        while(l<=h)
         {
-            int mid=low+(high-low)/2;
-            if(ar[mid]==target)
+            int m=l+(h-l)/2;
+            if(nums[m]==target)
             {
-                ans=mid;
-                low=mid+1;
+                ans=m;
+                l=m+1;
             }
-            else if(ar[mid]>target)
+            else if(nums[m]<target)
             {
-                high=mid-1;
+                l=m+1;
             }
             else
             {
-                low=mid+1;
+                h=m-1;
             }
         }
         return ans;
