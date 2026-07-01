@@ -4,68 +4,46 @@ class Solution {
         {
             return -1;
         }
-        int min=min(bloomDay);
-        int max=max(bloomDay);
-        int low=min;
-        int high=max;
-        while(low<=high)
+        int l=1,h=Integer.MIN_VALUE;
+        for(int i:bloomDay)
         {
-            int mid=low+(high-low)/2;
-            if(possible(bloomDay,mid,m,k)==true)
+            if(i>h)
             {
-                high=mid-1;
+                h=i;
+            }
+        }
+        while(l<=h)
+        {
+            int mid=l+(h-l)/2;
+            if(check(bloomDay,mid,k)>=m)
+            {
+                h=mid-1;
             }
             else
             {
-                low=mid+1;
+                l=mid+1;
             }
         }
-        return low;
+        return l;
     }
-    public static boolean possible(int ar[],int day,int m,int k)
+    public int check(int bloomDay[],int mid,int k)
     {
-        int cut=0,bou=0;
-        for(int i=0;i<ar.length;i++)
+        int cut=0;
+        int bou=0;
+        int n=bloomDay.length;
+        for(int i=0;i<n;i++)
         {
-            if(ar[i]<=day)
+            if(bloomDay[i]<=mid)
             {
                 cut++;
             }
             else
             {
-                bou+=(cut/k);
+                bou+=cut/k;
                 cut=0;
             }
         }
-        bou+=(cut/k);
-        if(bou>=m)
-        {
-            return true;
-        }
-        return false;
-    }
-    public static int max(int ar[])
-    {
-        int max=Integer.MIN_VALUE;
-        for(int i=0;i<ar.length;i++)
-        {
-            if(max<ar[i])
-            {
-                max=ar[i];
-            }
-        }
-        return max;
-    }
-    public static int min(int ar[])
-    {
-        int min=Integer.MAX_VALUE;
-        for(int i=0;i<ar.length;i++)
-        {
-            if(min>ar[i])
-            {
-                min=ar[i];
-            }
-        }
-        return min;
+        bou+=cut/k;
+        return bou;
     }
 }
