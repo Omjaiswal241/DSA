@@ -1,59 +1,45 @@
 class Solution {
     public int shipWithinDays(int[] weights, int days) {
-        int low=max(weights);
-        int high=sum(weights);
-        while(low<=high)
+        int l=0,h=0;
+        for(int i=0;i<weights.length;i++)
         {
-            int mid=low+(high-low)/2;
-            if(check(weights,mid,days))
+            if(weights[i]>l)
             {
-                high=mid-1;
+                l=weights[i];
+            }
+            h+=weights[i];
+        }
+        while(l<=h)
+        {
+            int mid=l+(h-l)/2;
+            if(check(weights,mid)<=days)
+            {
+                h=mid-1;
             }
             else
             {
-                low=mid+1;
+                l=mid+1;
             }
         }
-        return low;
+        return l;
     }
-    public static boolean check(int ar[],int mid,int days)
+    public int check(int ar[],int mid)
     {
-        int sum=0,count=0;
-        for(int i=0;i<ar.length;i++)
-        {
-            if((sum+ar[i])>mid)
-            {
-                count++;
-                sum=0;
-            }
-            sum+=ar[i];
-        }
-        count++;
-        if(count<=days)
-        {
-            return true;
-        }
-        return false;
-    }
-    public static int sum(int [] ar)
-    {
+        int cnt=0;
         int sum=0;
         for(int i=0;i<ar.length;i++)
         {
-            sum+=ar[i];
-        }
-        return sum;
-    }
-    public static int max(int ar[])
-    {
-        int max=Integer.MIN_VALUE;
-        for(int i=0;i<ar.length;i++)
-        {
-            if(max<ar[i])
+            if(sum+ar[i]<=mid)
             {
-                max=ar[i];
+                sum+=ar[i];
+            }
+            else
+            {
+                cnt++;
+                sum=ar[i];
             }
         }
-        return max;
+        cnt+=(sum>0)?1:0;
+        return cnt;
     }
 }
