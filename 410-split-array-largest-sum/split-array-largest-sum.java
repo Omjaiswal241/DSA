@@ -1,42 +1,49 @@
 class Solution {
     public int splitArray(int[] nums, int k) {
-        int low=Integer.MIN_VALUE;
-        int high=0;
         int n=nums.length;
+        if(k>n)
+        {
+            return -1;
+        }
+        int l=Integer.MIN_VALUE,h=0;
         for(int i=0;i<n;i++)
         {
-            if(nums[i]>low)
+            if(nums[i]>l)
             {
-                low=nums[i];
+                l=nums[i];
             }
-            high+=nums[i];
+            h+=nums[i];
         }
-        while(low<=high)
+        while(l<=h)
         {
-            int mid=(low+(high-low)/2);
-            if(helper(nums,mid,k))
+            int mid=l+(h-l)/2;
+            if(check(nums,mid,k,n))
             {
-                high=mid-1;
+                h=mid-1;
             }
             else
             {
-                low=mid+1;
+                l=mid+1;
             }
         }
-        return low;
+        return l;
     }
-    public boolean helper(int nums[],int mid,int k)
+    public boolean check(int nums[],int mid,int k,int n)
     {
         int cnt=1;
-        int sum=0;
-        for(int i=0;i<nums.length;i++)
+        int curr=nums[0];
+        for(int i=1;i<n;i++)
         {
-            if(sum+nums[i]>mid)
+            if(curr+nums[i]<=mid)
             {
-                sum=0;
-                cnt++;
+                curr+=nums[i];
             }
-            sum+=nums[i];
+            else
+            {
+                curr=0;
+                cnt++;
+                curr+=nums[i];
+            }
         }
         if(cnt<=k)
         {
