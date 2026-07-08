@@ -1,21 +1,21 @@
 class Solution {
     public int[] sortByBits(int[] arr) {
-        int n=arr.length;
-        Integer[] res=new Integer[n];
+        Integer res[]=new Integer[arr.length];
         for(int i=0;i<arr.length;i++)
         {
             res[i]=arr[i];
         }
-        Arrays.sort(res,(a,b)->{
-        int counta=Integer.bitCount(a);
-        int countb=Integer.bitCount(b);
-        if(counta==countb)
+        Arrays.sort(res,(a,b)->
         {
-            return a-b;
-        }
-        return counta-countb;
-    });
-        for(int i=0;i<n;i++)
+            int countA=Integer.bitCount(a);
+            int countB=Integer.bitCount(b);
+            if(countA==countB)
+            {
+                return a-b;
+            }
+            return countA-countB;
+        });
+        for(int i=0;i<arr.length;i++)
         {
             arr[i]=res[i];
         }
