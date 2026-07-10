@@ -13,27 +13,27 @@ class Solution {
             return Integer.MAX_VALUE;
         }
         boolean sign=true;
-        if(dividend>=0 && divisor<0)
+        if(dividend<0 && divisor>0)
+        {
+            sign=false; 
+        }
+        else if(dividend>0 && divisor<0)
         {
             sign=false;
         }
-        else if(dividend<0 && divisor>=0)
-        {
-            sign=false;
-        }
+        long ans=0;
         long n=Math.abs((long)dividend);
         long d=Math.abs((long)divisor);
-        long ans=0;
         while(n>=d)
         {
             int cnt=0;
-            while(n>=(d<<(cnt+1)))
+            while(n>=(d*(1L<<(cnt+1))))
             {
                 cnt++;
             }
-            ans+=1<<cnt;
-            n-=(d<<cnt);
+            ans+=(1L<<cnt);
+            n-=(d*(1L<<cnt));
         }
-        return sign==true?(int)ans:-(int)ans;
+        return (sign)?(int)ans:-(int)ans;
     }
 }
