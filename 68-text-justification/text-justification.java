@@ -8,13 +8,13 @@ class Solution {
         while(i<n)
         {
             int lettercount=words[i].length();
-            int gaddhe=0;
             int j=i+1;
-            while(j<n && words[j].length()+1+lettercount+gaddhe<=maxWidth)
+            int gaddhe=0;
+            while(j<n && lettercount+words[j].length()+gaddhe+1<=maxWidth)
             {
                 lettercount+=words[j].length();
-                gaddhe+=1;
-                j=j+1;
+                gaddhe++;
+                j++;
             }
             int remaining=maxWidth-lettercount;
             int space=(gaddhe==0)?0:remaining/gaddhe;
@@ -39,7 +39,7 @@ class Solution {
             {
                 continue;
             }
-            for(int k=0;k<space;k++)
+            for(int s=space;s>0;s--)
             {
                 sb.append(" ");
             }
