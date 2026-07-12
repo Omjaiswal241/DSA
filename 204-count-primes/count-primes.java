@@ -1,29 +1,24 @@
 class Solution {
     public int countPrimes(int n) {
-        if(n<2)
+        if(n<=2)
         {
             return 0;
         }
-        else if(n==3)
+        int prime[]=new int [n];
+        Arrays.fill(prime,1);
+        for(int i=4;i<n;i=i+2)
         {
-            return 1;
+            prime[i]=0;
         }
-        int temp[]=new int[n];
-        Arrays.fill(temp,1);
         int limit=(int)Math.sqrt(n);
-        for(int i=2;i<=limit;i++)
+        for(int i=3;i<=limit;i=i+2)
         {
-            if(i==2 || i%2==1)
+            if(prime[i]==1)
             {
                 int f=i;
                 for(int j=i*i;j<n;j=i*f)
                 {
-                    temp[j]=0;
-                    if(i==2)
-                    {
-                        f++;
-                        continue;
-                    }
+                    prime[j]=0;
                     f=f+2;
                 }
             }
@@ -31,7 +26,7 @@ class Solution {
         int cnt=0;
         for(int i=2;i<n;i++)
         {
-            if(temp[i]==1)
+            if(prime[i]==1)
             {
                 cnt++;
             }
