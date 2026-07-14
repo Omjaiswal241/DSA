@@ -1,26 +1,29 @@
 class Solution {
     public int totalFruit(int[] fruits) {
-        int maxlen=0;
-        int l=0,r=0;
-        int n=fruits.length;
         HashMap<Integer,Integer> hm=new HashMap<>();
-        while(r<n)
+        int n=fruits.length;
+        int j=0;
+        int maxlen=0;
+        for(int i=0;i<n;i++)
         {
-            hm.put(fruits[r],hm.getOrDefault(fruits[r],0)+1);
+            hm.put(fruits[i],hm.getOrDefault(fruits[i],0)+1);
             if(hm.size()>2)
             {
-                hm.put(fruits[l],hm.get(fruits[l])-1);
-                if(hm.get(fruits[l])==0)
+                while(hm.size()>2)
                 {
-                    hm.remove(fruits[l]);
+                    int a=hm.get(fruits[j])-1;
+                    hm.put(fruits[j],a);
+                    if(a==0)
+                    {
+                        hm.remove(fruits[j]);
+                    }
+                    j++;
                 }
-                l++;                
             }
-            if(hm.size()<=2)
+            else if(hm.size()<=2)
             {
-                maxlen=Math.max(maxlen,r-l+1);
+                maxlen=Math.max(maxlen,i-j+1);
             }
-            r++;
         }
         return maxlen;
     }
