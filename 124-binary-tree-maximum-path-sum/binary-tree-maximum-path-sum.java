@@ -14,10 +14,10 @@
  * }
  */
 class Solution {
-    int max_sum=Integer.MIN_VALUE;
+    int ans=Integer.MIN_VALUE;
     public int maxPathSum(TreeNode root) {
         helper(root);
-        return max_sum;
+        return ans;
     }
     public int helper(TreeNode root)
     {
@@ -27,10 +27,10 @@ class Solution {
         }
         int left=helper(root.left);
         int right=helper(root.right);
-        int neeche_hi_milgaya=left+right+root.val;
-        int upar_hai=Math.max(left,right)+root.val;
-        int wahi_hai=root.val;
-        max_sum=Math.max(max_sum,(Math.max(wahi_hai,Math.max(neeche_hi_milgaya,upar_hai))));
-        return Math.max(upar_hai,wahi_hai);
+        int neeche_hi_ans=left+root.val+right;
+        int idhr_se_start=root.val;
+        int ek_side_liya=Math.max(left,right)+root.val;
+        ans=Math.max(ans,Math.max(neeche_hi_ans,Math.max(idhr_se_start,ek_side_liya)));
+        return Math.max(idhr_se_start,ek_side_liya);
     }
 }
