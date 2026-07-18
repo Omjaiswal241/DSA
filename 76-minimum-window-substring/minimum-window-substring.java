@@ -19,7 +19,7 @@ class Solution {
                 cntreq--;
             }
             hm.put(x,hm.getOrDefault(x,0)-1);
-            while(i<=j && cntreq==0)
+            while(cntreq==0)
             {
                 if(j-i+1<minlen)
                 {
