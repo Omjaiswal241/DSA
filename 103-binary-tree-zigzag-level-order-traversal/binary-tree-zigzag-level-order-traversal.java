@@ -16,40 +16,40 @@
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         List<List<Integer>> res=new ArrayList<>();
-        boolean lTOr=true;
         if(root==null)
         {
             return res;
         }
         Queue<TreeNode> qu=new ArrayDeque<>();
         qu.add(root);
+        boolean ltor=true;
         while(qu.size()!=0)
         {
-            List<Integer> li=new ArrayList<>();
             int size=qu.size();
+            List<Integer> li=new ArrayList<>();
             for(int i=0;i<size;i++)
             {
-                TreeNode front=qu.remove();
-                if(front.left!=null)
+                TreeNode curr=qu.poll();
+                if(curr.left!=null)
                 {
-                    qu.add(front.left);
+                    qu.add(curr.left);
                 }
-                if(front.right!=null)
+                if(curr.right!=null)
                 {
-                    qu.add(front.right);
+                    qu.add(curr.right);
                 }
-                li.add(front.val);
+                li.add(curr.val);
             }
-            if(lTOr==true)
+            if(ltor)
             {
-                res.add(li);
-                lTOr=false;
+                res.add(new ArrayList<>(li));
+                ltor=false;
             }
             else
             {
                 Collections.reverse(li);
-                res.add(li);
-                lTOr=true;
+                res.add(new ArrayList<>(li));
+                ltor=true;
             }
         }
         return res;
