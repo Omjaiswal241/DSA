@@ -16,44 +16,44 @@
 class Solution {
     class Nodeinfo
     {
-        int col,row,val;
-        Nodeinfo(int col,int row,int val)
+        int row,col,val;
+        Nodeinfo(int row,int col,int val)
         {
-            this.col=col;
             this.row=row;
+            this.col=col;
             this.val=val;
         }
     }
-    List<Nodeinfo> li=new ArrayList<>();
     public List<List<Integer>> verticalTraversal(TreeNode root) {
-        dfs(0,0,root);
+        List<List<Integer>> res=new ArrayList<>();
+        List<Nodeinfo> li=new ArrayList<>();
+        dfs(0,0,root,li);
         Collections.sort(li,(a,b)->
         {
             if(a.col!=b.col) return a.col-b.col;
             if(a.row!=b.row) return a.row-b.row;
             return a.val-b.val;
         });
-        List<List<Integer>> res=new ArrayList<>();
         int prevcol=Integer.MIN_VALUE;
-        for(Nodeinfo n:li)
+        for(Nodeinfo i:li)
         {
-            if(n.col!=prevcol)
+            if(i.col!=prevcol)
             {
                 res.add(new ArrayList<>());
-                prevcol=n.col;
+                prevcol=i.col;
             }
-            res.get(res.size()-1).add(n.val);
+            res.get(res.size()-1).add(i.val);
         }
         return res;
     }
-    void dfs(int col,int row,TreeNode root)
+    public void dfs(int row,int col,TreeNode root,List<Nodeinfo> li)
     {
         if(root==null)
         {
             return;
         }
-        li.add(new Nodeinfo(col,row,root.val));
-        dfs(col-1,row+1,root.left);
-        dfs(col+1,row+1,root.right);
+        li.add(new Nodeinfo(row,col,root.val));
+        dfs(row+1,col-1,root.left,li);
+        dfs(row+1,col+1,root.right,li);
     }
 }
