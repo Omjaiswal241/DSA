@@ -19,18 +19,18 @@ class Solution {
         {
             return true;
         }
-        return check(root.left,root.right);
+        return helper(root.left,root.right);
     }
-    boolean check(TreeNode root1,TreeNode root2)
+    public boolean helper(TreeNode leftside,TreeNode rightside)
     {
-        if(root1==null && root2==null)
+        if(leftside==null && rightside==null)
         {
             return true;
         }
-        if(root1==null || root2==null)
+        if(leftside==null || rightside==null)
         {
             return false;
         }
-        return root1.val==root2.val && check(root1.left,root2.right) && check(root1.right,root2.left);
+        return leftside.val==rightside.val && helper(leftside.left,rightside.right) && helper(leftside.right,rightside.left);
     }
 }
