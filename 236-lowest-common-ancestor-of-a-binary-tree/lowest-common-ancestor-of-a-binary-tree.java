@@ -9,40 +9,45 @@
  */
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root==null)
+        {
+            return null;
+        }
         List<TreeNode> l1=nodetoroot(root,p);
         List<TreeNode> l2=nodetoroot(root,q);
-        int p1=l1.size()-1,p2=l2.size()-1;
-        while((p1>=0 && p2>=0) && l1.get(p1)==l2.get(p2))
+        int idx1=l1.size()-1;
+        int idx2=l2.size()-1;
+        while(idx1>=0 && idx2>=0 && l1.get(idx1).val==l2.get(idx2).val)
         {
-            p1--;
-            p2--;
+            idx1--;
+            idx2--;
         }
-        return l1.get(p1+1);
+        return l1.get(idx1+1);
     }
-    public List<TreeNode> nodetoroot(TreeNode root,TreeNode p)
+    public List<TreeNode> nodetoroot(TreeNode root,TreeNode tar)
     {
         if(root==null)
         {
             return new ArrayList<>();
         }
-        if(root==p)
+        if(root==tar)
         {
             List<TreeNode> base=new ArrayList<>();
             base.add(root);
             return base;
         }
-        List<TreeNode> left=nodetoroot(root.left,p);
-        if(left.size()>0)
+        List<TreeNode> left=nodetoroot(root.left,tar);
+        if(left.size()!=0)
         {
             left.add(root);
             return left;
         }
-        List<TreeNode> right=nodetoroot(root.right,p);
-        if(right.size()>0)
+        List<TreeNode> right=nodetoroot(root.right,tar);
+        if(right.size()!=0)
         {
             right.add(root);
             return right;
         }
         return new ArrayList<>();
-    }
+    } 
 }
