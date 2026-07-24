@@ -1,39 +1,44 @@
 class Solution {
-    class Pair implements Comparable<Pair>
+    class Pair
     {
-        int num,freq;
+        int num;
+        int freq;
         Pair(int num,int freq)
         {
             this.num=num;
             this.freq=freq;
         }
-        public int compareTo(Pair o)
-        {
-            return this.freq-o.freq;
-        }
     }
     public int[] topKFrequent(int[] nums, int k) {
-        int n=nums.length;
         HashMap<Integer,Integer> hm=new HashMap<>();
-        for(int i=0;i<n;i++)
+        for(int num:nums)
         {
-            hm.put(nums[i],hm.getOrDefault(nums[i],0)+1);
+            hm.put(num,hm.getOrDefault(num,0)+1);
         }
-        PriorityQueue<Pair> pq=new PriorityQueue<>();
+        PriorityQueue<Pair> pq=new PriorityQueue<>((a,b)->
+        {
+            return a.freq-b.freq;
+        });
         for(int key:hm.keySet())
         {
-            int freq=hm.get(key);
-            pq.add(new Pair(key,freq));
-            if(pq.size()>k)
+            if(pq.size()<k)
             {
-                pq.remove();
+                pq.add(new Pair(key,hm.get(key)));
+            }
+            else
+            {
+                if(hm.get(key)>pq.peek().freq)
+                {
+                    pq.poll();
+                    pq.add(new Pair(key,hm.get(key)));
+                }
             }
         }
         int res[]=new int[k];
-        while(k>0)
+        int i=0;
+        while(pq.size()>0)
         {
-            res[k-1]=pq.remove().num;
-            k--;
+            res[i++]=pq.poll().num;
         }
         return res;
     }
