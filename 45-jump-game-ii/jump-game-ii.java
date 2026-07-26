@@ -6,17 +6,17 @@ class Solution {
         dp[n-1]=0;
         for(int i=n-2;i>=0;i--)
         {
-            int k=nums[i];
-            while(k>0)
+            int jumps=nums[i];
+            while(jumps>0)
             {
-                int a=(i+k<n)?dp[i+k]:0;
-                if(a!=Integer.MAX_VALUE)
+                int pos=(jumps+i<=n-1)?dp[jumps+i]:0;
+                if(pos!=Integer.MAX_VALUE)
                 {
-                    dp[i]=Math.min(a+1,dp[i]);
+                dp[i]=Math.min(dp[i],pos+1);
                 }
-                k--;
+                jumps--;
             }
-        }
+        } 
         return dp[0];
     }
 }
