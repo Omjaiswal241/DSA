@@ -1,53 +1,43 @@
 class Solution {
     public boolean checkValidString(String s) {
-        int n=s.length();
-        int dp[][]=new int[n][n];
-        for(int i[]:dp)
+        Stack<Integer> st=new Stack<>();
+        Stack<Integer> asterisk=new Stack<>();
+        for(int i=0;i<s.length();i++)
         {
-            Arrays.fill(i,-1);
-        }
-        return solve(s,0,0,dp);
-    }
-    public boolean solve(String s,int idx,int open,int dp[][])
-    {
-        if(idx==s.length() && open==0)
-        {
-            return true;
-        }
-        if(idx==s.length())
-        {
-            return false;
-        }
-        if(dp[idx][open]!=-1)
-        {
-            return dp[idx][open]==1;
-        }
-        boolean isvalid=false;
-        char x=s.charAt(idx);
-        if(x=='(')
-        {
-            isvalid=solve(s,idx+1,open+1,dp);
-        }
-        else if(x=='*')
-        {
-            isvalid=solve(s,idx+1,open+1,dp) || solve(s,idx+1,open,dp);
-            if(open>=1)
+            char x=s.charAt(i);
+            if(x=='(')
             {
-                isvalid=isvalid || solve(s,idx+1,open-1,dp);
+                st.push(i);
             }
-        }
-        else
-        {
-            if(open>0)
+            else if(x==')')
             {
-                isvalid=solve(s,idx+1,open-1,dp);
+                if(st.size()!=0)
+                {
+                    st.pop();
+                }
+                else if(asterisk.size()!=0)
+                {
+                    asterisk.pop();
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
-                return false;
+                asterisk.push(i);
             }
         }
-        dp[idx][open]=isvalid?1:0;
-        return isvalid;
+        while(st.size()!=0 && asterisk.size()!=0)
+        {
+            if(st.peek()>asterisk.peek())
+            {
+                return false;
+            }
+            st.pop();
+            asterisk.pop();
+        }
+        return st.size()==0;
     }
 }
