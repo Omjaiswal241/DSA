@@ -1,13 +1,13 @@
 class Solution {
     public int candy(int[] ratings) {
-        int sum=1;
-        int i=1;
         int n=ratings.length;
+        int i=1;
+        int sum=1;
         while(i<n)
         {
             while(i<n && ratings[i]==ratings[i-1])
             {
-                sum+=1;
+                sum++;
                 i++;
             }
             int peak=1;
@@ -24,9 +24,9 @@ class Solution {
                 down++;
                 i++;
             }
-            if(down>=peak)
+            if(down>peak)
             {
-                sum+=(down-peak);
+                sum+=down-peak;
             }
         }
         return sum;
