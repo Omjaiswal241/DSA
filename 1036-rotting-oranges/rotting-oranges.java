@@ -1,24 +1,50 @@
 class Solution {
+    int directions[][]={{-1,0},{0,-1},{1,0},{0,1}};
     public int orangesRotting(int[][] grid) {
         int m=grid.length;
         int n=grid[0].length;
-        int visited[][]=new int[m][n];
-        for(int i[]:visited)
-        {
-            Arrays.fill(i,Integer.MAX_VALUE);
-        }
+        Queue<int[]> qu=new ArrayDeque<>();
+        boolean visited[][]=new boolean[m][n];
         for(int i=0;i<m;i++)
         {
             for(int j=0;j<n;j++)
             {
                 if(grid[i][j]==2)
                 {
-                    grid[i][j]=1;
-                    dfs(grid,m,n,i,j,0,visited);
-                    grid[i][j]=2;
+                qu.add(new int[]{i,j});
+                visited[i][j]=true;
                 }
             }
-        } 
+        }
+        int timearr[][]=new int[m][n];
+        for(int i[]:timearr)
+        {
+            Arrays.fill(i,-1);
+        }
+        int time=0;
+        while(qu.size()>0)
+        {
+            int size=qu.size();
+            while(size-- >0)
+            {
+                int curr[]=qu.poll();
+                int row=curr[0];
+                int col=curr[1];
+                timearr[row][col]=time;
+                for(int dir[]:directions)
+                {
+                    int newrow=dir[0]+row;
+                    int newcol=dir[1]+col;
+                    if(newrow<0 || newcol<0 || newrow>=m || newcol>=n || visited[newrow][newcol] || grid[newrow][newcol]==0)
+                    {
+                        continue;
+                    }
+                    qu.add(new int[]{newrow,newcol});
+                    visited[newrow][newcol]=true;
+                }
+            }
+            time++;
+        }
         int ans=0;
         for(int i=0;i<m;i++)
         {
@@ -26,35 +52,17 @@ class Solution {
             {
                 if(grid[i][j]==1)
                 {
-                    if(visited[i][j]==Integer.MAX_VALUE)
+                    if(timearr[i][j]==-1)
                     {
                         return -1;
                     }
                     else
                     {
-                        ans=Math.max(visited[i][j],ans);
+                        ans=Math.max(ans,timearr[i][j]);
                     }
                 }
             }
         }
         return ans;
-    }
-    public void dfs(int [][]grid,int m,int n,int i,int j,int time,int [][]visited)
-    {
-        if(i<0 || j<0 || i>=m || j>=n || grid[i][j]!=1)
-        {
-            return;
-        }
-        if(visited[i][j]!=Integer.MAX_VALUE && visited[i][j]<time)
-        {
-            return;
-        }
-        grid[i][j]=2;
-        visited[i][j]=Math.min(visited[i][j],time);
-        dfs(grid,m,n,i-1,j,time+1,visited);
-        dfs(grid,m,n,i,j-1,time+1,visited);
-        dfs(grid,m,n,i+1,j,time+1,visited);
-        dfs(grid,m,n,i,j+1,time+1,visited);
-        grid[i][j]=1;
     }
 }
