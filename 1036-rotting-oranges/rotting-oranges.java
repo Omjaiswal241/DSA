@@ -16,11 +16,6 @@ class Solution {
                 }
             }
         }
-        int timearr[][]=new int[m][n];
-        for(int i[]:timearr)
-        {
-            Arrays.fill(i,-1);
-        }
         int time=0;
         while(qu.size()>0)
         {
@@ -30,39 +25,30 @@ class Solution {
                 int curr[]=qu.poll();
                 int row=curr[0];
                 int col=curr[1];
-                timearr[row][col]=time;
                 for(int dir[]:directions)
                 {
                     int newrow=dir[0]+row;
                     int newcol=dir[1]+col;
-                    if(newrow<0 || newcol<0 || newrow>=m || newcol>=n || visited[newrow][newcol] || grid[newrow][newcol]==0)
+                    if(newrow<0 || newcol<0 || newrow>=m || newcol>=n || grid[newrow][newcol]!=1)
                     {
                         continue;
                     }
                     qu.add(new int[]{newrow,newcol});
-                    visited[newrow][newcol]=true;
+                    grid[newrow][newcol]=2;
                 }
             }
             time++;
         }
-        int ans=0;
         for(int i=0;i<m;i++)
         {
             for(int j=0;j<n;j++)
             {
                 if(grid[i][j]==1)
                 {
-                    if(timearr[i][j]==-1)
-                    {
-                        return -1;
-                    }
-                    else
-                    {
-                        ans=Math.max(ans,timearr[i][j]);
-                    }
+                    return -1;
                 }
             }
         }
-        return ans;
+        return time>0?time-1:0;
     }
 }
