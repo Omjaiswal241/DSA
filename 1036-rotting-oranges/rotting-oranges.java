@@ -4,7 +4,6 @@ class Solution {
         int m=grid.length;
         int n=grid[0].length;
         Queue<int[]> qu=new ArrayDeque<>();
-        boolean visited[][]=new boolean[m][n];
         for(int i=0;i<m;i++)
         {
             for(int j=0;j<n;j++)
@@ -12,7 +11,6 @@ class Solution {
                 if(grid[i][j]==2)
                 {
                 qu.add(new int[]{i,j});
-                visited[i][j]=true;
                 }
             }
         }
