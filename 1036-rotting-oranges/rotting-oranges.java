@@ -1,57 +1,60 @@
 class Solution {
     public int orangesRotting(int[][] grid) {
-        int n=grid.length;
-        int m=grid[0].length;
-        int visited[][]=new int[n][m];
+        int m=grid.length;
+        int n=grid[0].length;
+        int visited[][]=new int[m][n];
         for(int i[]:visited)
         {
             Arrays.fill(i,Integer.MAX_VALUE);
         }
-        for(int i=0;i<n;i++)
+        for(int i=0;i<m;i++)
         {
-            for(int j=0;j<m;j++)
+            for(int j=0;j<n;j++)
             {
                 if(grid[i][j]==2)
                 {
                     grid[i][j]=1;
-                    helper(grid,i,j,visited,0);
+                    dfs(grid,m,n,i,j,0,visited);
                     grid[i][j]=2;
                 }
             }
-        }
-        int res=0;
-        for(int i=0;i<n;i++)
+        } 
+        int ans=0;
+        for(int i=0;i<m;i++)
         {
-            for(int j=0;j<m;j++)
+            for(int j=0;j<n;j++)
             {
                 if(grid[i][j]==1)
                 {
-                if(visited[i][j]==Integer.MAX_VALUE)
-                {
-                    return -1;
-                }
-                res=Math.max(res,visited[i][j]);
+                    if(visited[i][j]==Integer.MAX_VALUE)
+                    {
+                        return -1;
+                    }
+                    else
+                    {
+                        ans=Math.max(visited[i][j],ans);
+                    }
                 }
             }
         }
-        return res;
+        return ans;
     }
-    public void helper(int grid[][],int i,int j,int visited[][],int time)
+    public void dfs(int [][]grid,int m,int n,int i,int j,int time,int [][]visited)
     {
-        if(i<0 || j<0 || i>=grid.length || j>=grid[0].length || grid[i][j]!=1)
+        if(i<0 || j<0 || i>=m || j>=n || grid[i][j]!=1)
         {
-            return ;
+            return;
         }
-        if(time>=visited[i][j])
+        if(visited[i][j]!=Integer.MAX_VALUE && visited[i][j]<time)
         {
-            return ;
+            return;
         }
         grid[i][j]=2;
-        visited[i][j]=Math.min(time,visited[i][j]);
-        helper(grid,i-1,j,visited,time+1);
-        helper(grid,i,j-1,visited,time+1);
-        helper(grid,i+1,j,visited,time+1);
-        helper(grid,i,j+1,visited,time+1);
+        visited[i][j]=Math.min(visited[i][j],time);
+        dfs(grid,m,n,i-1,j,time+1,visited);
+        dfs(grid,m,n,i,j-1,time+1,visited);
+        dfs(grid,m,n,i+1,j,time+1,visited);
+        dfs(grid,m,n,i,j+1,time+1,visited);
         grid[i][j]=1;
     }
 }
