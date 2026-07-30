@@ -1,10 +1,9 @@
 class Solution {
     int N;
-    int directions[][]={{1,0},{-1,0},{0,1},{0,-1}};
+    int directions[][]={{-1,0},{0,-1},{1,0},{0,1}};
     public int maximumSafenessFactor(List<List<Integer>> grid) {
         N=grid.size();
-        int [][]distNearestThief=new int[N][N];
-        Queue<int[]> qu=new LinkedList<>();
+        Queue<int[]> qu=new ArrayDeque<>();
         boolean visited[][]=new boolean[N][N];
         for(int i=0;i<N;i++)
         {
@@ -16,21 +15,22 @@ class Solution {
                     visited[i][j]=true;
                 }
             }
-        } 
+        }
+        int distnearthief[][]=new int[N][N];
         int level=0;
-        while(qu.size()>0)
+        while(qu.size()!=0)
         {
             int size=qu.size();
             while(size-- >0)
             {
-                int temp[]=qu.remove();
-                int row=temp[0];
-                int col=temp[1];
-                distNearestThief[row][col]=level;
+                int curr[]=qu.remove();
+                int row=curr[0];
+                int col=curr[1];
+                distnearthief[row][col]=level;
                 for(int dir[]:directions)
                 {
-                    int newrow=dir[0]+row;
-                    int newcol=dir[1]+col;
+                    int newrow=row+dir[0];
+                    int newcol=col+dir[1];
                     if(newrow<0 || newcol<0 || newrow>=N || newcol>=N || visited[newrow][newcol])
                     {
                         continue;
@@ -41,53 +41,51 @@ class Solution {
             }
             level++;
         }
-        int res=0;
-        int l=0,h=400;
-        while(l<=h)
+        int low=0,high=N*N;
+        int ans=0;
+        while(low<=high)
         {
-            int mid=l+(h-l)/2;
-            if(check(distNearestThief,mid))
+            int mid=low+(high-low)/2;
+            if(check(distnearthief,mid))
             {
-                res=mid;
-                l=mid+1;
+                ans=mid;
+                low=mid+1;
             }
             else
             {
-                h=mid-1;
+                high=mid-1;
             }
         }
-        return res;
+        return ans;
     }
-
-    public boolean check(int [][]distNearestThief,int mid)
+    public boolean check(int distnearthief[][],int mid)
     {
-        Queue<int[]> qu=new LinkedList<>();
-        boolean visited[][]=new boolean[N][N];
-        qu.add(new int[]{0,0});
-        visited[0][0]=true;
-        if(distNearestThief[0][0]<mid)
+        if(distnearthief[0][0]<mid)
         {
             return false;
         }
-        while(qu.size()>0)
+        Queue<int[]> qu=new ArrayDeque<>();
+        qu.add(new int[]{0,0});
+        boolean visited[][]=new boolean[N][N];
+        visited[0][0]=true;
+        while(qu.size()!=0)
         {
-            int curr[]=qu.remove();
+            int curr[]=qu.poll();
             int row=curr[0];
             int col=curr[1];
-
-            if(row==N-1 && col==N-1)
+            if(row==N-1&& col==N-1)
             {
                 return true;
             }
             for(int dir[]:directions)
             {
-                int newrow=dir[0]+row;
-                int newcol=dir[1]+col;
+                int newrow=row+dir[0];
+                int newcol=col+dir[1];
                 if(newrow<0 || newcol<0 || newrow>=N || newcol>=N || visited[newrow][newcol])
                 {
                     continue;
                 }
-                if(distNearestThief[newrow][newcol]<mid)
+                if(distnearthief[newrow][newcol]<mid)
                 {
                     continue;
                 }
