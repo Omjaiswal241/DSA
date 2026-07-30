@@ -1,19 +1,20 @@
 class Solution {
     public int[][] floodFill(int[][] image, int sr, int sc, int color) {
-        int original=image[sr][sc];
-        helper(image,sr,sc,color,original);
+        int original_clr=image[sr][sc];
+        dfs(image,sr,sc,color,original_clr,new boolean[image.length][image[0].length]);
         return image;
     }
-    public static void helper(int image[][],int i,int j,int color,int original)
+    public void dfs(int [][]image,int sr,int sc,int color,int original_clr,boolean [][]visited)
     {
-        if(i<0 || j<0 || i>=image.length || j>=image[0].length || image[i][j]==color || image[i][j]!=original)
+        if(sr<0 || sc<0 || sr>=image.length || sc>=image[0].length || image[sr][sc]!=original_clr || visited[sr][sc]==true)
         {
             return ;
         }
-        image[i][j]=color;
-        helper(image,i-1,j,color,original);
-        helper(image,i,j-1,color,original);
-        helper(image,i+1,j,color,original);
-        helper(image,i,j+1,color,original);
+        image[sr][sc]=color;
+        visited[sr][sc]=true;
+        dfs(image,sr-1,sc,color,original_clr,visited);
+        dfs(image,sr,sc-1,color,original_clr,visited);
+        dfs(image,sr+1,sc,color,original_clr,visited);
+        dfs(image,sr,sc+1,color,original_clr,visited);
     }
 }
