@@ -17,18 +17,29 @@ class Solution {
                 }
             }
         }
-        for(int i=0;i<m;i++)
+        boolean [][] visited=new boolean[m][n];
+        for (int j = 0; j < n; j++) 
         {
-            for(int j=0;j<n;j++)
+            if (board[0][j] == 'O' && !visited[0][j])
             {
-                if(i==0 || j==0 || i==m-1 || j==n-1)
-                {
-                    if(board[i][j]=='O')
-                    {
-                        dfs(board,i,j,m,n,res,new boolean[m][n]);
-                    }
-                }
+                dfs(board, 0, j, m, n, res, visited);
             }
+            if (board[m - 1][j] == 'O' && !visited[m - 1][j])
+            {
+                dfs(board, m - 1, j, m, n, res, visited);
+            }
+        }
+
+        for (int i = 1; i < m - 1; i++) 
+        {
+            if (board[i][0] == 'O' && !visited[i][0])
+            {
+                dfs(board, i, 0, m, n, res, visited);
+            }
+            if (board[i][n - 1] == 'O' && !visited[i][n - 1])
+            {
+                dfs(board, i, n - 1, m, n, res, visited);
+            }    
         }
         for(int i=1;i<m-1;i++)
         {
