@@ -1,52 +1,43 @@
 class Solution {
-    static class Pair
+    class Pair
     {
-        int vtx,level;
-        Pair(int vtx,int level)
+        int vtx,lvl;
+        Pair(int vtx,int lvl)
         {
             this.vtx=vtx;
-            this.level=level;
+            this.lvl=lvl;
         }
     }
     public boolean isBipartite(int[][] graph) {
-      int visited[]=new int[graph.length];
-      Arrays.fill(visited,-1);
-      for(int vtx=0;vtx<graph.length;vtx++)
-      {
-        if(visited[vtx]==-1)
+        int n=graph.length;
+        int visited[]=new int[n];
+        Arrays.fill(visited,-1);
+
+        for(int j=0;j<n;j++)
         {
-        boolean res=helper(graph,visited,vtx);
-        if(res==false)
-        {
-            return false;
-        }
-        }
-      }
-      return true; 
-    }
-    public static boolean helper(int [][]graph,int visited[],int vtx)
-    {
-        Queue<Pair> qu=new ArrayDeque<>();
-        qu.add(new Pair(vtx,0));
-        while(qu.size()>0)
-        {
-            Pair front=qu.remove();
-            if(visited[front.vtx]==-1)
+            if(visited[j]!=-1)
             {
-                visited[front.vtx]=front.level;
-                for(int nbr:graph[front.vtx])
+                continue;
+            }
+            Queue<Pair> qu=new ArrayDeque<>();
+            qu.add(new Pair(j,0));
+            while(qu.size()!=0)
+            {
+                Pair curr=qu.remove();
+                if(visited[curr.vtx]!=-1)
                 {
-                    if(visited[nbr]==-1)
+                    if(visited[curr.vtx]%2!=curr.lvl%2)
                     {
-                        qu.add(new Pair(nbr,front.level+1));
+                    return false;
                     }
                 }
-            }
-            else
-            {
-                if(visited[front.vtx]!=front.level)
+                visited[curr.vtx]=curr.lvl;
+                for(int i:graph[curr.vtx])
                 {
-                    return  false;
+                    if(visited[i]==-1)
+                    {
+                        qu.add(new Pair(i,curr.lvl+1));
+                    }
                 }
             }
         }
