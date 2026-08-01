@@ -1,48 +1,56 @@
 class Solution {
     public List<Integer> eventualSafeNodes(int[][] graph) {
         int n=graph.length;
-        boolean visited[]=new boolean[n];
-        boolean inRecursion[]=new boolean[n];
+        List<List<Integer>> adj=new ArrayList<>();
         for(int i=0;i<n;i++)
         {
-            if(visited[i]==false)
+            adj.add(new ArrayList<>());
+        }
+        for(int i=0;i<n;i++)
+        {
+            for(int j:graph[i])
             {
-                isCyclicDfs(graph,i,visited,inRecursion);
+                adj.get(j).add(i);
+            }
+        }
+        int indegree[]=new int[n];
+        for(int i=0;i<n;i++)
+        {
+            for(int j:adj.get(i))
+            {
+            indegree[j]++;
+            }
+        }
+        Queue<Integer> qu=new ArrayDeque<>();
+        for(int i=0;i<n;i++)
+        {
+            if(indegree[i]==0)
+            {
+                qu.add(i);
+            }
+        }
+        boolean safestate[]=new boolean[n];
+        while(qu.size()!=0)
+        {
+            int curr=qu.poll();
+            safestate[curr]=true;
+            for(int i:adj.get(curr))
+            {
+                indegree[i]--;
+                if(indegree[i]==0)
+                {
+                    qu.add(i);
+                }
             }
         }
         List<Integer> res=new ArrayList<>();
         for(int i=0;i<n;i++)
         {
-            if(inRecursion[i]==false)
+            if(safestate[i])
             {
                 res.add(i);
             }
-        }
+        } 
         return res;
-    }
-    public boolean isCyclicDfs(int [][]graph,int i,boolean []visited,boolean inRecursion[])
-    {
-        visited[i]=true;
-        inRecursion[i]=true;
-        for(int next:graph[i])
-        {
-            if(visited[next]==false)
-            {
-                boolean res=isCyclicDfs(graph,next,visited,inRecursion);
-                if(res)
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                if(inRecursion[next])
-                {
-                    return true;
-                }
-            }
-        }
-        inRecursion[i]=false;
-        return false;
     }
 }
