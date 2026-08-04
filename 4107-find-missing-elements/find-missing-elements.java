@@ -1,12 +1,22 @@
 class Solution {
     public List<Integer> findMissingElements(int[] nums) {
-        Arrays.sort(nums);
         int n=nums.length;
-        int low=nums[0];
-        int high=nums[n-1];
+        int low=101;
+        int high=0;
+        for(int i:nums)
+        {
+            if(i>high)
+            {
+                high=i;
+            }
+            if(i<low)
+            {
+                low=i;
+            }
+        }
         List<Integer> li=new ArrayList<>();
         HashMap<Integer,Integer> hm=new HashMap<>();
-        for(int i=1;i<n-1;i++)
+        for(int i=0;i<n;i++)
         {
             hm.put(nums[i],1);
         }
