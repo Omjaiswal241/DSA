@@ -1,5 +1,19 @@
 class Solution {
     int directions[][]={{-1,0},{-1,-1},{0,-1},{1,-1},{1,0},{1,1},{0,1},{-1,1}};
+    class Pair implements Comparable<Pair>
+    {
+        int dist;
+        int []ar;
+        Pair(int dist,int ar[])
+        {
+            this.dist=dist;
+            this.ar=ar;
+        }
+        public int compareTo(Pair o)
+        {
+            return Integer.compare(this.dist,o.dist);
+        }
+    }
     public int shortestPathBinaryMatrix(int[][] grid) {
         int n=grid.length;
         int m=grid[0].length;
@@ -7,36 +21,36 @@ class Solution {
         {
             return -1;
         }
-        Queue<int[]> qu=new ArrayDeque<>();
-        qu.add(new int[]{0,0});
-        grid[0][0]=1;
-        int level=1;
-        while(qu.size()!=0)
+        int res[][]=new int[n][m];
+        for(int i[]:res)
         {
-            int size=qu.size();
-            for(int j=0;j<size;j++)
+            Arrays.fill(i,Integer.MAX_VALUE);
+        }
+        PriorityQueue<Pair> pq=new PriorityQueue<>();
+        pq.add(new Pair(0,new int[]{0,0}));
+        res[0][0]=0;
+        while(pq.size()!=0)
+        {
+            Pair curr=pq.poll();
+            if(curr.dist>res[curr.ar[0]][curr.ar[1]])
             {
-            int curr[]=qu.poll();
-            int row=curr[0];
-            int col=curr[1];
-            if(row==n-1 && col==m-1)
-            {
-                return level;
+                continue;
             }
             for(int dir[]:directions)
             {
-                int newrow=row+dir[0];
-                int newcol=col+dir[1];
+                int newrow=curr.ar[0]+dir[0];
+                int newcol=curr.ar[1]+dir[1];
                 if(newrow<0 || newcol<0 || newrow>=n || newcol>=m || grid[newrow][newcol]==1)
                 {
                     continue;
                 }
-                grid[newrow][newcol]=1;
-                qu.add(new int[]{newrow,newcol});
+                if(curr.dist+1<res[newrow][newcol])
+                {
+                    res[newrow][newcol]=curr.dist+1;
+                    pq.add(new Pair(res[newrow][newcol],new int[]{newrow,newcol}));
+                }
             }
-            }
-            level++;
         }
-        return -1;
+        return res[n-1][m-1]==Integer.MAX_VALUE?-1:res[n-1][m-1]+1;
     }
 }
