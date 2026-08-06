@@ -1,37 +1,36 @@
 class Solution {
     int ans=0;
     public int maximalPathQuality(int[] values, int[][] edges, int maxTime) {
+        List<List<int[]>> adj=new ArrayList<>();
         int n=values.length;
-        List<List<int[]>> li=new ArrayList<>();
         for(int i=0;i<n;i++)
         {
-            li.add(new ArrayList<>());
+            adj.add(new ArrayList<>());
         }
         for(int i=0;i<edges.length;i++)
         {
-            li.get(edges[i][0]).add(new int[]{edges[i][1],edges[i][2]});
-            li.get(edges[i][1]).add(new int[]{edges[i][0],edges[i][2]});
+            adj.get(edges[i][0]).add(new int[]{edges[i][1],edges[i][2]});
+            adj.get(edges[i][1]).add(new int[]{edges[i][0],edges[i][2]});
         }
-        dfs(0,0,0,values,maxTime,li);
+        dfs(0,0,0,values,adj,maxTime);
         return ans;
     }
-    public void dfs(int src,int currval,int currtime,int[] values,int maxTime,List<List<int[]>> li)
+    public void dfs(int src,int currtime,int currval,int []values,List<List<int[]>> adj,int maxTime)
     {
         if(currtime>maxTime)
         {
-            return ;
+            return;
         }
         currval+=values[src];
         if(src==0)
         {
-            ans=Math.max(ans,currval);
+            ans=Math.max(currval,ans);
         }
         int temp=values[src];
         values[src]=0;
-        for(int i=0;i<li.get(src).size();i++)
+        for(int next[]:adj.get(src))
         {
-            int a[]=li.get(src).get(i);
-            dfs(a[0],currval,currtime+a[1],values,maxTime,li);
+            dfs(next[0],currtime+next[1],currval,values,adj,maxTime);
         }
         values[src]=temp;
     }
