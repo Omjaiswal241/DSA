@@ -41,7 +41,7 @@ class Solution {
             }
             else
             {
-                low[node]=Math.min(low[nbr],low[node]);
+                low[node]=Math.min(dt[nbr],low[node]);
             }
         }
     }
