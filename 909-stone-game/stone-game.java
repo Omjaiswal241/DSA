@@ -23,7 +23,7 @@ class Solution {
         }
         if(i==j)
         {
-            return dp[i][j];
+            return piles[i];
         }
         if(dp[i][j]!=-1)
         {
