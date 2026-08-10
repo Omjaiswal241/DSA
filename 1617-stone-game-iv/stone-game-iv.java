@@ -17,7 +17,7 @@ class Solution {
         int lim=(int)Math.sqrt(n);
         for(int i=1;i<=lim;i++)
         {
-            if(solve(n-(int)Math.pow(i,2),dp)==false)
+            if(solve((n-(int)Math.pow(i,2)),dp)==false)
             {
                 dp[n]=1;
                 return true;
