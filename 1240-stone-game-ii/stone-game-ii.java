@@ -10,9 +10,9 @@ class Solution {
                 Arrays.fill(j,-1);
             }
         }
-        return solve(piles,1,0,1,dp);  // solve(piles,Alice,idx,M,dp)
+        return solve(piles,1,0,1,dp);
     }
-    public int solve(int []piles,int person,int idx,int M,int [][][]dp)
+    public int solve(int piles[],int person,int idx,int M,int [][][]dp)
     {
         if(idx>=n)
         {
@@ -23,7 +23,7 @@ class Solution {
             return dp[person][idx][M];
         }
         int stones=0;
-        int res=(person==1)?Integer.MIN_VALUE:Integer.MAX_VALUE;  // person=1 -> Alice
+        int res=(person==1)?Integer.MIN_VALUE:Integer.MAX_VALUE;
         for(int x=1;x<=Math.min(2*M,n-idx);x++)
         {
             stones+=piles[idx+x-1];
