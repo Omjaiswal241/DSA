@@ -13,7 +13,7 @@ class Solution {
         }
         int alice=solve(piles,0,n-1,dp);
         int bob=sum-alice;
-        return alice-bob>0;
+        return alice>bob;
     }
     public int solve(int piles[],int i,int j,int dp[][])
     {
@@ -29,8 +29,8 @@ class Solution {
         {
             return dp[i][j];
         }
-        int take_i=piles[i]+Math.min(solve(piles,i+2,j,dp),solve(piles,i+1,j-1,dp));
-        int take_j=piles[j]+Math.min(solve(piles,i,j-2,dp),solve(piles,i+1,j-1,dp));
-        return dp[i][j]=Math.max(take_i,take_j);
+        int pick_i=piles[i]+Math.min(solve(piles,i+2,j,dp),solve(piles,i+1,j-1,dp));
+        int pick_j=piles[j]+Math.min(solve(piles,i+1,j-1,dp),solve(piles,i,j-2,dp));
+        return dp[i][j]=Math.max(pick_i,pick_j);
     }
 }
