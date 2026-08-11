@@ -1,9 +1,9 @@
 class Solution {
     public int missingInteger(int[] nums) {
-        HashMap<Integer,Integer> hm=new HashMap<>();
+        boolean temp[]=new boolean[51];
         for(int i:nums)
         {
-            hm.put(i,hm.getOrDefault(i,0)+1);
+            temp[i]=true;
         }
         int sum=nums[0];
         for(int i=1;i<nums.length;i++)
@@ -17,11 +17,18 @@ class Solution {
                 break;
             }
         }
-        int tar=sum;
-        while(hm.containsKey(tar))
+        int res=sum;
+        for(int i=sum;i<51;i++)
         {
-            tar++;
+            if(temp[i]==true)
+            {
+                res++;
+            }
+            else
+            {
+                break;
+            }
         }
-        return tar;
+        return res;
     }
 }
