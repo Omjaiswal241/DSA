@@ -1,15 +1,15 @@
 class Solution {
     public void solveSudoku(char[][] board) {
-        helper(board,0,0);
+        solve(0,0,board);
     }
-    public boolean helper(char[][] board,int r,int c)
+    public boolean solve(int r,int c,char [][]board)
     {
         if(r==9)
         {
             return true;
         }
-        int nr=r;
         int nc=c+1;
+        int nr=r;
         if(nc==9)
         {
             nr=r+1;
@@ -17,43 +17,43 @@ class Solution {
         }
         if(board[r][c]!='.')
         {
-            return helper(board,nr,nc);
+            return solve(nr,nc,board);
         }
         for(char i='1';i<='9';i++)
         {
-            if(issafe(board,r,c,i))
+            if(check(board,i,r,c))
             {
                 board[r][c]=i;
-                boolean res=helper(board,nr,nc);
+                boolean res=solve(nr,nc,board);
                 if(res)
                 {
                     return true;
                 }
-                board[r][c]='.';
             }
+            board[r][c]='.';
         }
         return false;
     }
-    public boolean issafe(char [][]board,int r,int c,char d)
+    public boolean check(char board[][],char curr,int r,int c)
     {
-        int srr=3*(r/3);
-        int src=3*(c/3);
         for(int i=0;i<9;i++)
         {
-            if(board[i][c]==d)
+            if(board[r][i]==curr)
             {
                 return false;
             }
-            if(board[r][i]==d)
+            if(board[i][c]==curr)
             {
                 return false;
             }
         }
-        for(int i=0;i<3;i++)
+        int row=3*(r/3);
+        int col=3*(c/3);
+        for(int i=row;i<row+3;i++)
         {
-            for(int j=0;j<3;j++)
+            for(int j=col;j<col+3;j++)
             {
-                if(board[srr+i][src+j]==d)
+                if(board[i][j]==curr)
                 {
                     return false;
                 }
@@ -61,15 +61,4 @@ class Solution {
         }
         return true;
     }
-
-
-
-
-
-
-
-
-
-
-
 }
