@@ -3,7 +3,7 @@ class Solution {
     class Pair implements Comparable<Pair>
     {
         int dist;
-        int []ar;
+        int ar[];
         Pair(int dist,int ar[])
         {
             this.dist=dist;
@@ -16,41 +16,42 @@ class Solution {
     }
     public int shortestPathBinaryMatrix(int[][] grid) {
         int n=grid.length;
-        int m=grid[0].length;
-        if(grid[0][0]==1)
-        {
-            return -1;
-        }
-        int res[][]=new int[n][m];
+        PriorityQueue<Pair> pq=new PriorityQueue<>();
+        int res[][]=new int[n][n];
         for(int i[]:res)
         {
             Arrays.fill(i,Integer.MAX_VALUE);
         }
-        PriorityQueue<Pair> pq=new PriorityQueue<>();
-        pq.add(new Pair(0,new int[]{0,0}));
-        res[0][0]=0;
+        if(grid[0][0]==1)
+        {
+            return -1;
+        }
+        res[0][0]=1;
+        pq.add(new Pair(1,new int[]{0,0}));
         while(pq.size()!=0)
         {
             Pair curr=pq.poll();
-            if(curr.dist>res[curr.ar[0]][curr.ar[1]])
+            int row=curr.ar[0];
+            int col=curr.ar[1];
+            if(curr.dist>res[row][col])
             {
                 continue;
             }
-            for(int dir[]:directions)
+            for(int dist[]:directions)
             {
-                int newrow=curr.ar[0]+dir[0];
-                int newcol=curr.ar[1]+dir[1];
-                if(newrow<0 || newcol<0 || newrow>=n || newcol>=m || grid[newrow][newcol]==1)
+                int nr=row+dist[0];
+                int nc=col+dist[1];
+                if(nr<0 || nc<0 || nr>=n || nc>=n || grid[nr][nc]==1)
                 {
                     continue;
                 }
-                if(curr.dist+1<res[newrow][newcol])
+                if(res[nr][nc]>res[row][col]+1)
                 {
-                    res[newrow][newcol]=curr.dist+1;
-                    pq.add(new Pair(res[newrow][newcol],new int[]{newrow,newcol}));
+                    res[nr][nc]=res[row][col]+1;
+                    pq.add(new Pair(res[nr][nc],new int[]{nr,nc}));
                 }
             }
         }
-        return res[n-1][m-1]==Integer.MAX_VALUE?-1:res[n-1][m-1]+1;
+        return res[n-1][n-1]==Integer.MAX_VALUE?-1:res[n-1][n-1];
     }
 }
