@@ -23,15 +23,15 @@ class Solution {
     }
     public boolean ispalin(String s)
     {
-        int l=0,h=s.length()-1;
-        while(l<h)
+        int low=0,high=s.length()-1;
+        while(low<high)
         {
-            if(s.charAt(l)!=s.charAt(h))
+            if(s.charAt(low)!=s.charAt(high))
             {
                 return false;
             }
-            l++;
-            h--;
+            low++;
+            high--;
         }
         return true;
     }
