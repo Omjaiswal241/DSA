@@ -1,11 +1,11 @@
 class Solution {
     public int minCut(String s) {
-       int n=s.length();
-       int dp[]=new int[n];
-       Arrays.fill(dp,-1);
-       return helper(s,0,dp)-1; 
+        int n=s.length();
+        int dp[]=new int[n];
+        Arrays.fill(dp,-1);
+        return helper(s,0,dp)-1;
     }
-    public int helper(String s,int idx,int []dp)
+    public int helper(String s,int idx,int dp[])
     {
         if(idx==s.length())
         {
@@ -15,28 +15,27 @@ class Solution {
         {
             return dp[idx];
         }
-        int min_cost=Integer.MAX_VALUE;
+        int cuts=Integer.MAX_VALUE;
         for(int i=idx;i<s.length();i++)
         {
-            if(ispalin(s,idx,i))
+            if(ispalin(s.substring(idx,i+1)))
             {
-                int cost=1+helper(s,i+1,dp);
-                min_cost=Math.min(min_cost,cost);
+                cuts=Math.min(cuts,1+helper(s,i+1,dp));
             }
         }
-        return dp[idx]=min_cost;
+        return dp[idx]=cuts;
     }
-    public boolean ispalin(String s,int idx,int i)
+    public boolean ispalin(String s)
     {
-        int l=idx,h=i;
-        while(l<h)
+        int low=0,high=s.length()-1;
+        while(low<high)
         {
-            if(s.charAt(l)!=s.charAt(h))
+            if(s.charAt(low)!=s.charAt(high))
             {
                 return false;
             }
-            l++;
-            h--;
+            low++;
+            high--;
         }
         return true;
     }
