@@ -1,34 +1,36 @@
 class Solution {
-    Boolean []dp;
-    int n;
     public boolean wordBreak(String s, List<String> wordDict) {
-        n=s.length();
-        dp=new Boolean[n];
+        int n=s.length();
+        int dp[]=new int[n];
+        Arrays.fill(dp,-1);
         HashSet<String> hs=new HashSet<>();
-        for(String str:wordDict)
+        for(String i:wordDict)
         {
-            hs.add(str);
+            hs.add(i);
         }
-        return solve(s,0,wordDict,hs);
+        return helper(s,hs,0,dp)==1;
     }
-    public boolean solve(String s,int idx,List<String> wordDict,HashSet<String> hs)
+    public int helper(String s,HashSet<String> hs,int idx,int dp[])
     {
-        if(idx==n)
+        if(idx==s.length())
         {
-            return true;
+            return 1;
         }
-        if(dp[idx]!=null)
+        if(dp[idx]!=-1)
         {
             return dp[idx];
         }
-        for(int endidx=idx+1;endidx<=n;endidx++)
+        for(int i=idx;i<s.length();i++)
         {
-            String temp=s.substring(idx,endidx);
-            if(hs.contains(temp) && solve(s,endidx,wordDict,hs))
+            if(hs.contains(s.substring(idx,i+1)))
             {
-                return dp[idx]=true;
+                dp[idx]=helper(s,hs,i+1,dp);
+            }
+            if(dp[idx]==1)
+            {
+                return dp[idx];
             }
         }
-        return dp[idx]=false;
+        return dp[idx]=0;
     }
 }
