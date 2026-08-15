@@ -46,7 +46,7 @@ class Solution {
             }
             int nottake=helper(s,idx1,p,idx2-2,dp);
             int take=0;
-            if(p.charAt(idx2-1)==s.charAt(idx1) || p.charAt(idx2-1)=='.')
+            if(s.charAt(idx1)==p.charAt(idx2-1) || p.charAt(idx2-1)=='.')
             {
                 take=helper(s,idx1-1,p,idx2,dp);
             }
