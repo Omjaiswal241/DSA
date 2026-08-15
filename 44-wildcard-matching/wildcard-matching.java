@@ -1,13 +1,13 @@
 class Solution {
     public boolean isMatch(String s, String p) {
-        int idx1=s.length()-1;
-        int idx2=p.length()-1;
-        int dp[][]=new int[idx1+1][idx2+1];
+        int idx1=s.length();
+        int idx2=p.length();
+        int dp[][]=new int[idx1][idx2];
         for(int i[]:dp)
         {
             Arrays.fill(i,-1);
         }
-        return helper(s,idx1,p,idx2,dp)==1;
+        return helper(s,idx1-1,p,idx2-1,dp)==1;
     }
     public int helper(String s,int idx1,String p,int idx2,int dp[][])
     {
@@ -26,7 +26,7 @@ class Solution {
             }
             return 1;
         }
-        if(idx2<0 && idx1>=0)
+        if(idx2<0)
         {
             return 0;
         }
