@@ -1,25 +1,32 @@
 class Solution {
+    int directions[][]={{-2,-1},{-1,-2},{1,-2},{2,-1},{2,1},{1,2},{-1,2},{-2,1}};
     public boolean checkValidGrid(int[][] grid) {
-        return isknight(grid,0,0,0);
-    }
-    public static boolean isknight(int [][] grid,int r,int c,int count)
-    {
-        if(r<0 || c<0 || r>=grid.length || c>=grid[0].length || grid[r][c]!=count)
+        if(grid[0][0]!=0)
         {
             return false;
         }
-        if(count==(grid.length*grid[0].length)-1)
+        return helper(0,0,grid,0);
+    }
+    public boolean helper(int r,int c,int grid[][],int cnt)
+    {
+        if(cnt==(grid.length*grid[0].length)-1)
         {
             return true;
         }
-            boolean ans1=isknight(grid,r-2,c+1,count+1);
-            boolean ans2=isknight(grid,r-1,c+2,count+1);
-            boolean ans3=isknight(grid,r+1,c+2,count+1);
-            boolean ans4=isknight(grid,r+2,c+1,count+1);
-            boolean ans5=isknight(grid,r+2,c-1,count+1);
-            boolean ans6=isknight(grid,r+1,c-2,count+1);
-            boolean ans7=isknight(grid,r-1,c-2,count+1);
-            boolean ans8=isknight(grid,r-2,c-1,count+1);
-            return ans1||ans2||ans3||ans4||ans5||ans6||ans7||ans8;
+        for(int dir[]:directions)
+        {
+            int nrow=r+dir[0];
+            int ncol=c+dir[1];
+            if(nrow<0 || ncol<0 || nrow>=grid.length || ncol>=grid[0].length || grid[nrow][ncol]!=cnt+1)
+            {
+                continue;
+            }
+            boolean res=helper(nrow,ncol,grid,cnt+1);
+            if(res)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
