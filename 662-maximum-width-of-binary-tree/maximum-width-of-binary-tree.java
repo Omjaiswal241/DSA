@@ -17,8 +17,8 @@ class Solution {
     class Pair
     {
         TreeNode node;
-        int idx;
-        Pair(TreeNode node,int idx)
+        long idx;
+        Pair(TreeNode node,long idx)
         {
             this.node=node;
             this.idx=idx;
@@ -29,36 +29,30 @@ class Solution {
         {
             return 0;
         }
-       Queue<Pair> qu=new ArrayDeque<>();
-       qu.add(new Pair(root,0));
-       int mmin=Integer.MIN_VALUE;
-       while(qu.size()!=0)
-       {
-        int size=qu.size();
-        int low=0,high=0;
-        for(int i=0;i<size;i++)
+        Deque<Pair> qu=new ArrayDeque<>();
+        qu.add(new Pair(root,0));
+        long res=Long.MIN_VALUE;
+        while(qu.size()!=0)
         {
-            int curridx=qu.peek().idx;
-            if(i==0)
+            long low=qu.getFirst().idx;
+            long high=qu.getLast().idx;
+            res=Math.max(res,high-low+1);
+            int n=qu.size();
+            while(n-- >0)
             {
-                low=curridx;
-            }
-            if(i==size-1)
-            {
-                high=curridx;
-            }
-            Pair curr=qu.remove();
-            if(curr.node.left!=null)
-            {
-                qu.add(new Pair(curr.node.left,2*(curridx-low)+1));
-            }
-            if(curr.node.right!=null)
-            {
-                qu.add(new Pair(curr.node.right,2*(curridx-low)+2));
+                Pair temp=qu.poll();
+                TreeNode curr=temp.node;
+                long idx=temp.idx;
+                if(curr.left!=null)
+                {
+                    qu.add(new Pair(curr.left,(long)(2*idx+1)));
+                } 
+                if(curr.right!=null)
+                {
+                    qu.add(new Pair(curr.right,(long)(2*idx+2)));
+                }
             }
         }
-        mmin=Math.max(mmin,(high-low)+1);
-       } 
-       return mmin;
+        return (int)res;
     }
 }
