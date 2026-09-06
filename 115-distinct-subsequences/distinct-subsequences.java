@@ -1,34 +1,34 @@
 class Solution {
     public int numDistinct(String s, String t) {
-        int n=s.length();
-        int m=t.length();
-        int dp[][]=new int[n][m];
+        int idx1=s.length();
+        int idx2=t.length();
+        int dp[][]=new int[idx1][idx2];
         for(int i[]:dp)
         {
             Arrays.fill(i,-1);
         }
-        return helper(s,t,0,0,dp);
+        return solve(s,0,t,0,dp);
     }
-    public int helper(String s,String t,int i,int j,int [][]dp)
+    public int solve(String s,int idx1,String t,int idx2,int dp[][])
     {
-        if(j==t.length())
+        if(idx2==t.length())
         {
             return 1;
         }
-        if(i==s.length())
+        if(idx1==s.length())
         {
             return 0;
         }
-        if(dp[i][j]!=-1)
+        if(dp[idx1][idx2]!=-1)
         {
-            return dp[i][j];
+            return dp[idx1][idx2];
         }
-        int ways=0;
-        if(s.charAt(i)==t.charAt(j))
+        int take=0;
+        if(s.charAt(idx1)==t.charAt(idx2))
         {
-            ways+=helper(s,t,i+1,j+1,dp);
+            take=solve(s,idx1+1,t,idx2+1,dp);
         }
-        ways+=helper(s,t,i+1,j,dp);
-        return dp[i][j]=ways;
+        int nottake=solve(s,idx1+1,t,idx2,dp);
+        return dp[idx1][idx2]=take+nottake;
     }
 }
