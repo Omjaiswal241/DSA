@@ -1,22 +1,22 @@
 class Solution {
-    int MAXWIDTH;
+    int MAX_WIDTH;
     public List<String> fullJustify(String[] words, int maxWidth) {
         List<String> res=new ArrayList<>();
-        MAXWIDTH=maxWidth;
+        MAX_WIDTH=maxWidth;
         int n=words.length;
         int i=0;
         while(i<n)
         {
-            int lettercount=words[i].length();
-            int j=i+1;
+            int lettercnt=words[i].length();
             int gaddhe=0;
-            while(j<n && lettercount+words[j].length()+gaddhe+1<=maxWidth)
+            int j=i+1;
+            while(j<n && lettercnt+words[j].length()+gaddhe+1<=maxWidth)
             {
-                lettercount+=words[j].length();
+                lettercnt+=words[j].length();
                 gaddhe++;
                 j++;
             }
-            int remaining=maxWidth-lettercount;
+            int remaining=maxWidth-lettercnt;
             int space=(gaddhe==0)?0:remaining/gaddhe;
             int extraspace=(gaddhe==0)?0:remaining%gaddhe;
             if(j==n)
@@ -29,7 +29,7 @@ class Solution {
         }
         return res;
     }
-    public String addString(String words[],int i,int j,int space,int extraspace)
+    public String addString(String [] words,int i,int j,int space,int extraspace)
     {
         StringBuilder sb=new StringBuilder();
         for(int f=i;f<j;f++)
@@ -43,13 +43,12 @@ class Solution {
             {
                 sb.append(" ");
             }
-            if(extraspace>0)
+            if(extraspace-->0)
             {
                 sb.append(" ");
-                extraspace--;
             }
         }
-        while(sb.length()<MAXWIDTH)
+        while(sb.length()<MAX_WIDTH)
         {
             sb.append(" ");
         }
