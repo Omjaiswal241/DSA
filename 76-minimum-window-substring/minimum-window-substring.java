@@ -1,41 +1,41 @@
 class Solution {
     public String minWindow(String s, String t) {
-        int n=s.length();
         HashMap<Character,Integer> hm=new HashMap<>();
         for(int i=0;i<t.length();i++)
         {
-            char ch=t.charAt(i);
-            hm.put(ch,hm.getOrDefault(ch,0)+1);
+            char x=t.charAt(i);
+            hm.put(x,hm.getOrDefault(x,0)+1);
         }
         int i=0,j=0;
-        int cntreq=t.length();
-        int startidx=0;
-        int minlen=Integer.MAX_VALUE;
-        while(j<n)
+        int cnt=t.length();
+        int n=s.length();
+        String res="";
+        int len=Integer.MAX_VALUE;
+        while(i<n)
         {
-            char x=s.charAt(j);
-            if(hm.containsKey(x) && hm.get(x)>0)
+            char x=s.charAt(i);
+            if(hm.getOrDefault(x,0)>0)
             {
-                cntreq--;
+            cnt--;
             }
             hm.put(x,hm.getOrDefault(x,0)-1);
-            while(cntreq==0)
+            while(cnt==0)
             {
-                if(j-i+1<minlen)
+                if(len>(i-j+1))
                 {
-                    minlen=(j-i+1);
-                    startidx=i;
+                    len=(i-j+1);
+                    res=s.substring(j,i+1);
                 }
-                char a=s.charAt(i);
-                hm.put(a,hm.get(a)+1);
-                if(hm.get(a)>0)
+                char y=s.charAt(j);
+                hm.put(y,hm.get(y)+1);
+                j++;
+                if(hm.get(y)>0)
                 {
-                    cntreq++;
+                    cnt++;
                 }
-                i++;
             }
-            j++;
+            i++;
         }
-        return minlen==Integer.MAX_VALUE?"":s.substring(startidx,startidx+minlen);
+        return res;
     }
 }
