@@ -25,12 +25,12 @@ class Solution {
         {
             return 0;
         }
-        int left=helper(root.left);
-        int right=helper(root.right);
-        int neeche_hi_ans=left+root.val+right;
-        int idhr_se_start=root.val;
-        int ek_side_liya=Math.max(left,right)+root.val;
-        ans=Math.max(ans,Math.max(neeche_hi_ans,Math.max(idhr_se_start,ek_side_liya)));
-        return Math.max(idhr_se_start,ek_side_liya);
+        int leftsum=helper(root.left);
+        int rightsum=helper(root.right);
+        int yahi_mil_gaya=leftsum+rightsum+root.val;
+        int ekside=Math.max(leftsum,rightsum)+root.val;
+        int curr_se=root.val;
+        ans=Math.max(ans,Math.max(yahi_mil_gaya,Math.max(ekside,curr_se)));
+        return Math.max(ekside,curr_se);
     }
 }
