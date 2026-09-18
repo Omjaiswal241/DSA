@@ -1,8 +1,9 @@
 class Solution {
     public int maxProfit(int[] prices) {
-        int j=0;
+        int n=prices.length;
         int profit=0;
-        for(int i=1;i<prices.length-1;i++)
+        int j=0;
+        for(int i=1;i<n-1;i++)
         {
             if(prices[i]<=prices[j])
             {
@@ -14,7 +15,7 @@ class Solution {
                 j=i;
             }
         }
-        profit+=prices[prices.length-1]-prices[j]>0?prices[prices.length-1]-prices[j]:0;
+        profit+=(prices[n-1]>prices[j])?(prices[n-1]-prices[j]):0;
         return profit;
     }
 }
