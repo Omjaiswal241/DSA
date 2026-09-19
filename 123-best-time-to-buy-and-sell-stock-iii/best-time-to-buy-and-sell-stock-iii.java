@@ -2,51 +2,37 @@ class Solution {
     public int maxProfit(int[] prices) {
         int n=prices.length;
         int sd[]=new int[n];
-        int bd[]=new int[n];
-        int sd_min=prices[0];
         sd[0]=0;
-        for(int i=1;i<prices.length;i++)
+        int min_sellprice=prices[0];
+        for(int i=1;i<n;i++)
         {
-            sd[i]=prices[i]-sd_min>0?prices[i]-sd_min:0;
-            if(prices[i]-sd_min<0)
+            sd[i]=(prices[i]-min_sellprice>0)?(prices[i]-min_sellprice):0;
+            if(min_sellprice>prices[i])
             {
-                sd_min=prices[i];
+                min_sellprice=prices[i];
             }
         }
+        int bd[]=new int[n];
         bd[n-1]=0;
-        int bd_max=prices[n-1];
+        int max_buyprice=prices[n-1];
         for(int i=n-2;i>=0;i--)
         {
-            if(bd_max-prices[i]<=0)
+            bd[i]=(max_buyprice-prices[i]>0)?(max_buyprice-prices[i]):0;
+            if(max_buyprice<prices[i])
             {
-                bd_max=prices[i];
-                bd[i]=0;
-            }
-            else
-            {
-                bd[i]=bd_max-prices[i];
+                max_buyprice=prices[i];
             }
         }
         for(int i=1;i<n;i++)
         {
-            if(sd[i]<sd[i-1])
-            {
-                sd[i]=sd[i-1];
-            }
+            sd[i]=Math.max(sd[i],sd[i-1]);
+            bd[n-i-1]=Math.max(bd[n-i-1],bd[n-i]);
         }
-        for(int i=n-2;i>=0;i--)
-        {
-            if(bd[i]<bd[i+1])
-            {
-                bd[i]=bd[i+1];
-            }
-        }
-        int max_profit=0;
+        int ans=0;
         for(int i=0;i<n;i++)
         {
-            int sum=sd[i]+bd[i];
-            max_profit=Math.max(max_profit,sum);
+            ans=Math.max(ans,sd[i]+bd[i]);
         }
-        return max_profit;
+        return ans;
     }
 }
