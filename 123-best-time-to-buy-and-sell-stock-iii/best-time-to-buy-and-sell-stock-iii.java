@@ -1,38 +1,35 @@
 class Solution {
     public int maxProfit(int[] prices) {
         int n=prices.length;
-        int sd[]=new int[n];
-        sd[0]=0;
-        int min_sellprice=prices[0];
-        for(int i=1;i<n;i++)
+        int dp[][][]=new int[n][2][3];
+        for(int layers[][]:dp)
         {
-            sd[i]=(prices[i]-min_sellprice>0)?(prices[i]-min_sellprice):0;
-            if(min_sellprice>prices[i])
+            for(int i[]:layers)
             {
-                min_sellprice=prices[i];
+                Arrays.fill(i,-1);
             }
         }
-        int bd[]=new int[n];
-        bd[n-1]=0;
-        int max_buyprice=prices[n-1];
-        for(int i=n-2;i>=0;i--)
+        return helper(prices,0,1,2,dp);
+    }
+    public int helper(int prices[],int idx,int buy,int k,int dp[][][])
+    {
+        if(idx==prices.length || k==0)
         {
-            bd[i]=(max_buyprice-prices[i]>0)?(max_buyprice-prices[i]):0;
-            if(max_buyprice<prices[i])
-            {
-                max_buyprice=prices[i];
-            }
+            return 0;
         }
-        for(int i=1;i<n;i++)
+        if(dp[idx][buy][k]!=-1)
         {
-            sd[i]=Math.max(sd[i],sd[i-1]);
-            bd[n-i-1]=Math.max(bd[n-i-1],bd[n-i]);
+            return dp[idx][buy][k];
         }
-        int ans=0;
-        for(int i=0;i<n;i++)
+        int profit=0;
+        if(buy==1)
         {
-            ans=Math.max(ans,sd[i]+bd[i]);
+            profit=Math.max((-prices[idx]+helper(prices,idx+1,0,k,dp)),helper(prices,idx+1,1,k,dp));
         }
-        return ans;
+        else
+        {
+            profit=Math.max((prices[idx]+helper(prices,idx+1,1,k-1,dp)),helper(prices,idx+1,0,k,dp));
+        }
+        return dp[idx][buy][k]=profit;
     }
 }
