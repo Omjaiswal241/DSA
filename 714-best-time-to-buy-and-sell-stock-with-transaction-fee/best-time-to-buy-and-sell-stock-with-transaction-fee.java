@@ -5,7 +5,7 @@ class Solution {
         for(int i=1;i<prices.length;i++)
         {
             int nbs=Math.max(obs,oss-prices[i]);
-            int nss=Math.max(oss,obs+prices[i]-fee);
+            int nss=Math.max(oss,prices[i]+obs-fee);
             obs=nbs;
             oss=nss;
         }
