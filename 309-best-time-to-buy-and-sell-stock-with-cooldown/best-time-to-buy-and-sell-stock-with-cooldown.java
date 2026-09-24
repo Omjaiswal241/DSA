@@ -1,17 +1,17 @@
 class Solution {
     public int maxProfit(int[] prices) {
-        int obp=-prices[0];
-        int osp=0;
-        int ocp=0;
-        for(int i=1;i<prices.length;i++)
+        int n=prices.length;
+        int obd=-prices[0];
+        int osd=0;
+        int cd=0;
+        for(int i=1;i<n;i++)
         {
-            int nbp=Math.max(obp,ocp-prices[i]);
-            int nsp=Math.max(osp,prices[i]+obp);
-            int ncp=osp;
-            obp=nbp;
-            osp=nsp;
-            ocp=ncp;
+            int nbd=Math.max(obd,cd-prices[i]);
+            int nsd=Math.max(osd,prices[i]+obd);
+            cd=osd;
+            obd=nbd;
+            osd=nsd;
         }
-        return osp;
+        return osd;
     }
 }
