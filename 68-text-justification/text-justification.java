@@ -1,51 +1,51 @@
 class Solution {
     int MAX_WIDTH;
+    int n;
     public List<String> fullJustify(String[] words, int maxWidth) {
-        List<String> res=new ArrayList<>();
+        n=words.length;
         MAX_WIDTH=maxWidth;
-        int n=words.length;
         int i=0;
+        List<String> li=new ArrayList<>();
         while(i<n)
         {
-            int lettercnt=words[i].length();
+            int lettercount=words[i].length();
             int gaddhe=0;
             int j=i+1;
-            while(j<n && lettercnt+words[j].length()+gaddhe+1<=maxWidth)
+            while(j<n && lettercount+words[j].length()+gaddhe+1<=MAX_WIDTH)
             {
-                lettercnt+=words[j].length();
-                gaddhe++;
+                lettercount+=words[j].length();
+                gaddhe+=1;
                 j++;
             }
-            int remaining=maxWidth-lettercnt;
-            int space=(gaddhe==0)?0:remaining/gaddhe;
-            int extraspace=(gaddhe==0)?0:remaining%gaddhe;
+            int remaining=MAX_WIDTH-lettercount;
+            int space=gaddhe==0?0:remaining/gaddhe;
+            int extraspace=gaddhe==0?0:remaining%gaddhe;
             if(j==n)
             {
                 space=1;
                 extraspace=0;
             }
-            res.add(addString(words,i,j,space,extraspace));
+            li.add(solve(words,i,j,space,extraspace));
             i=j;
         }
-        return res;
+        return li;
     }
-    public String addString(String [] words,int i,int j,int space,int extraspace)
+    public String solve(String words[],int i,int j,int space,int extraspace)
     {
         StringBuilder sb=new StringBuilder();
         for(int f=i;f<j;f++)
         {
             sb.append(words[f]);
-            if(f==j-1)
+            if(f!=j-1)
             {
-                continue;
-            }
-            for(int s=space;s>0;s--)
-            {
-                sb.append(" ");
-            }
-            if(extraspace-->0)
-            {
-                sb.append(" ");
+                for(int spaces=space;spaces>0;spaces--)
+                {
+                    sb.append(" ");
+                }
+                if(extraspace-->0)
+                {
+                    sb.append(" ");
+                }
             }
         }
         while(sb.length()<MAX_WIDTH)
