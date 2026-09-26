@@ -1,32 +1,25 @@
 class Solution {
     public int lengthOfLIS(int[] nums) {
+        int n=nums.length;
         List<Integer> li=new ArrayList<>();
-        for(int i=0;i<nums.length;i++)
+        for(int i:nums)
         {
             if(li.size()==0)
             {
-                li.add(nums[i]);
+                li.add(i);
+            }
+            if(li.get(li.size()-1)<i)
+            {
+                li.add(i);
             }
             else
             {
-                int idx=findidx(li,nums[i]);
-                if(idx<li.size())
+                int j=0;
+                while(li.get(j)<i)
                 {
-                    li.remove(idx);
+                    j++;
                 }
-                li.add(idx,nums[i]);
-            }
-        }
-        return li.size();
-    }
-    public int findidx(List<Integer> li,int k)
-    {
-        int pos=-1;
-        for(int i=0;i<li.size();i++)
-        {
-            if(li.get(i)>=k)
-            {
-                return i;
+                li.set(j,i);
             }
         }
         return li.size();
