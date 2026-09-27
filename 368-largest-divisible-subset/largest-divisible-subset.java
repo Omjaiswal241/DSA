@@ -1,37 +1,42 @@
 class Solution {
     public List<Integer> largestDivisibleSubset(int[] nums) {
-        Arrays.sort(nums);
         int n=nums.length;
+        Arrays.sort(nums);
+
         int dp[]=new int[n];
         Arrays.fill(dp,1);
-        int hash[]=new int[n];
-        int lastidx=0;
-        int max=1;
-        for(int idx=1;idx<n;idx++)
+
+        int parent[]=new int[n];
+        Arrays.fill(parent,-1);
+
+        int LIS=1;
+        int LIS_idx=0;
+        for(int i=0;i<n;i++)
         {
-            hash[idx]=idx;
-            for(int j=0;j<idx;j++)
+            for(int j=0;j<i;j++)
             {
-                if(nums[idx]%nums[j]==0 && dp[j]+1>dp[idx])
+                if(nums[i]%nums[j]==0)
                 {
-                    dp[idx]=1+dp[j];
-                    hash[idx]=j;
+                    if(dp[j]+1>dp[i])
+                    {
+                        dp[i]=dp[j]+1;
+                        parent[i]=j;
+                        if(LIS<dp[i])
+                        {
+                            LIS=dp[i];
+                            LIS_idx=i;
+                        }
+                    }
                 }
             }
-            if(max<dp[idx])
-            {
-                max=dp[idx];
-                lastidx=idx;
-            }
         }
-        List<Integer> li=new ArrayList<>();
-        li.add(nums[lastidx]);
-        while(hash[lastidx]!=lastidx)
+        List<Integer> res=new ArrayList<>();
+        while(LIS_idx!=-1)
         {
-            lastidx=hash[lastidx];
-            li.add(nums[lastidx]);
+            res.add(nums[LIS_idx]);
+            LIS_idx=parent[LIS_idx];
         }
-        Collections.reverse(li);
-        return li;
+        Collections.reverse(res);
+        return res;
     }
 }
