@@ -1,44 +1,46 @@
 class Solution {
     public int longestStrChain(String[] words) {
-     Arrays.sort(words,(a,b)->(a.length()-b.length()));
-     int n=words.length;
-     int dp[]=new int[n];
-     Arrays.fill(dp,1);
-     int max=1;
-     for(int i=1;i<n;i++)
-     {
-        for(int j=0;j<i;j++)
+        int n=words.length;
+        Arrays.sort(words,(a,b)->
         {
-        if(iscorrect(words[i],words[j]) && dp[i]<dp[j]+1)
+            return Integer.compare(a.length(),b.length());
+        });
+        int dp[]=new int[n];
+        Arrays.fill(dp,1);
+        int ans=1;
+        for(int i=0;i<n;i++)
         {
-            dp[i]=dp[j]+1;
+            for(int j=0;j<i;j++)
+            {
+                if(isvalid(words[i],words[j]) && dp[j]+1>dp[i])
+                {
+                    dp[i]=dp[j]+1;
+                    ans=Math.max(ans,dp[i]);
+                }
+            }
         }
-        }
-        max=Math.max(dp[i],max);
-     }
-     return max;
+        return ans;
     }
-    public static boolean iscorrect(String s1,String s2)
+    public boolean isvalid(String s1,String s2)
     {
         if(s1.length()!=s2.length()+1)
         {
             return false;
         }
-        int first=0;
-        int second=0;
-        while(first<s1.length())
+        int idx1=0,idx2=0;
+        while(idx1<s1.length())
         {
-            if(second<s2.length() && s1.charAt(first)==s2.charAt(second))
+            if(idx2!=s2.length() && s1.charAt(idx1)==s2.charAt(idx2))
             {
-                first++;
-                second++;
+                idx1++;
+                idx2++;
             }
             else
             {
-                first++;
+                idx1++;
             }
         }
-        if(second==s2.length())
+        if(idx2==s2.length())
         {
             return true;
         }
