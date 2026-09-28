@@ -9,13 +9,13 @@ class Solution {
         {
             adj.get(prerequisites[i][1]).add(prerequisites[i][0]);
         }
-        boolean visited[]=new boolean[numCourses];
         boolean inRecursion[]=new boolean[numCourses];
+        boolean visited[]=new boolean[numCourses];
         for(int i=0;i<numCourses;i++)
         {
             if(visited[i]==false)
             {
-                boolean res=dfs(adj,i,visited,inRecursion);
+                boolean res=dfs(adj,i,inRecursion,visited);
                 if(res)
                 {
                     return false;
@@ -24,26 +24,29 @@ class Solution {
         }
         return true;
     }
-    public boolean dfs(List<List<Integer>> adj,int src,boolean visited[],boolean inRecursion[])
+    public boolean dfs(List<List<Integer>> adj,int i,boolean inRecursion[],boolean visited[])
     {
-        visited[src]=true;
-        inRecursion[src]=true;
-        for(int next:adj.get(src))
+        visited[i]=true;
+        inRecursion[i]=true;
+        for(int next:adj.get(i))
         {
             if(visited[next]==false)
             {
-                boolean res=dfs(adj,next,visited,inRecursion);
+                boolean res=dfs(adj,next,inRecursion,visited);
                 if(res)
                 {
                     return true;
                 }
             }
-            else if(visited[next] && inRecursion[next]==true)
+            else
             {
-                return true;
+                if(inRecursion[next]==true)
+                {
+                    return true;
+                }
             }
         }
-        inRecursion[src]=false;
+        inRecursion[i]=false;
         return false;
     }
 }
