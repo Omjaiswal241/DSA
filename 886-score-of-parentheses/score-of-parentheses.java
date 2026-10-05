@@ -1,29 +1,24 @@
 class Solution {
     public int scoreOfParentheses(String s) {
-        Stack<Integer> st=new Stack<>();
         int n=s.length();
-        int score=0;
+        int depth=0;
+        int res=0;
         for(int i=0;i<n;i++)
         {
             char x=s.charAt(i);
             if(x=='(')
             {
-                st.push(score);
-                score=0;
+                depth++;
             }
             else
             {
+                depth--;
                 if(s.charAt(i-1)=='(')
                 {
-                    score=st.peek()+1;
+                res+=(1<<depth);
                 }
-                else
-                {
-                    score=st.peek()+score*2;
-                }
-                st.pop();
             }
         }
-        return score;
+        return res;
     }
 }
