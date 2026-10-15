@@ -4,19 +4,11 @@ class Solution {
         int ans=0;
         for(int i=0;i<n;i++)
         {
-            int cnt[]=new int[101];
+            HashSet<Integer> hs=new HashSet<>();
             for(int j=i;j<n;j++)
             {
-                cnt[nums.get(j)]++;
-                int temp=0;
-                for(int k=1;k<=100;k++)
-                {
-                    if(cnt[k]!=0)
-                    {
-                        temp++;
-                    }
-                }
-                ans+=temp*temp;
+                hs.add(nums.get(j));
+                ans+=hs.size()*hs.size();
             }
         }
         return ans;
