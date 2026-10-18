@@ -1,5 +1,5 @@
 # Write your MySQL query statement below
-select w2.id
+Select w2.id As Id
 from Weather w1
-Cross join Weather w2
-On DateDiff(w2.recordDate,w1.recordDate)=1 AND w2.temperature>w1.temperature
+Inner Join Weather w2
+Where DateDiff(w2.recordDate,w1.recordDate)=1 And w2.temperature>w1.temperature 
