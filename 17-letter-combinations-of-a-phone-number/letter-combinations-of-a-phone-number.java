@@ -1,5 +1,5 @@
 class Solution {
-    String ar[]={"@","#","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    String str[]={"@","%","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
     public List<String> letterCombinations(String digits) {
         if(digits.length()==0)
         {
@@ -7,17 +7,16 @@ class Solution {
             base.add("");
             return base;
         }   
-        char ch=digits.charAt(0);
-        String roq=digits.substring(1);
-        List<String> temp=letterCombinations(roq);
-        String f=ar[Integer.parseInt(ch+"")];
+        char x=digits.charAt(0);
+        List<String> roq=letterCombinations(digits.substring(1));
         List<String> res=new ArrayList<>();
-        for(int i=0;i<f.length();i++)
+        String ts=str[Integer.parseInt(x+"")];
+        for(int f=0;f<ts.length();f++)
         {
-            char x=f.charAt(i);
-            for(int j=0;j<temp.size();j++)
+            char v=ts.charAt(f);
+            for(int j=0;j<roq.size();j++)
             {
-                res.add(x+temp.get(j)+"");
+                res.add(""+v+roq.get(j));
             }
         }
         return res;
