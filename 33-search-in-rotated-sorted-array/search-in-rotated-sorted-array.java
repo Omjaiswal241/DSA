@@ -1,35 +1,49 @@
 class Solution {
     public int search(int[] nums, int target) {
         int n=nums.length;
-        int l=0,h=n-1;
-        while(l<=h)
+        int pivot_idx=pivot(nums);
+        int ans=solve(nums,0,pivot_idx-1,target);
+        if(ans!=-1)
         {
-            int mid=l+(h-l)/2;
+            return ans;
+        }
+        ans=solve(nums,pivot_idx,n-1,target);
+        return ans;
+    }
+    public int pivot(int nums[])
+    {
+        int n=nums.length;
+        int low=0,high=n-1;
+        while(low<high)
+        {
+            int mid=low+(high-low)/2;
+            if(nums[mid]<=nums[high])
+            {
+                high=mid;
+            }
+            else if(nums[low]<=nums[mid])
+            {
+                low=mid+1;
+            }
+        }
+        return low;
+    }
+    public int solve(int nums[],int low,int high,int target)
+    {
+        while(low<=high)
+        {
+            int mid=low+(high-low)/2;
             if(nums[mid]==target)
             {
                 return mid;
             }
-            if(nums[l]<=nums[mid])
+            else if(nums[mid]<target)
             {
-                if(nums[l]<=target && target<=nums[mid])
-                {
-                    h=mid-1;
-                }
-                else
-                {
-                    l=mid+1;
-                }
+                low=mid+1;
             }
             else
             {
-                if(nums[mid]<=target && target<=nums[h])
-                {
-                    l=mid+1;
-                }
-                else
-                {
-                    h=mid-1;
-                }
+                high=mid-1;
             }
         }
         return -1;
