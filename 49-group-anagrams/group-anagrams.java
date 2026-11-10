@@ -11,11 +11,7 @@ class Solution {
                 arr[j]=curr.charAt(j);
             } 
             Arrays.sort(arr);
-            String newstr="";
-            for(int k=0;k<arr.length;k++)
-            {
-                newstr+=arr[k];
-            }
+            String newstr=new String(arr);
             if(!hm.containsKey(newstr))
             {
                 hm.put(newstr,new ArrayList<>());
